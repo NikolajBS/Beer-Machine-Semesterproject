@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
+    <script defer src={{asset("javascript.js")}}></script>
 </head>
 <body>
 <header>
@@ -9,11 +10,11 @@
 </header>
 <div class="flex-container">
     <aside>
-        <button>Reset</button>
-        <button>Start</button>
-        <button>Stop</button>
-        <button>Abort</button>
-        <button>Clear</button>
+        <button id="resetBtn">Reset</button>
+        <button id="startBtn">Start</button>
+        <button id="stopBtn">Stop</button>
+        <button id="abortBtn">Abort</button>
+        <button id="clearBtn">Clear</button>
     </aside>
     <main class="flex-container-main">
         <article>
@@ -40,54 +41,99 @@
         </article>
         <article class="data-container">
             <div>
-                <div class="data-item">
-                    <img src="{{asset('images/thermometer.png')}}">
-                    <label>Temperature</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/thermometer.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/batch.png')}}">
-                    <label>Batch ID</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/batch.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/bottle.png')}}">
-                    <label>Produced</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/bottle.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
             </div>
             <div>
-                <div class="data-item">
-                    <img src="{{asset('images/humidity.png')}}">
-                    <label>Humidity</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/humidity.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/hmm.png')}}">
-                    <label>Amount to produce</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/hmm.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/accepted.png')}}">
-                    <label>Acceptable products</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/accepted.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
             </div>
             <div>
-                <div class="data-item">
-                    <img src="{{asset('images/vibration.png')}}">
-                    <label>Vibrance</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/vibration.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/ppm.png')}}">
-                    <label>Products per minute</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/ppm.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
-                <div class="data-item">
-                    <img src="{{asset('images/defected.png')}}">
-                    <label>Defect products</label>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/defected.png')}}">
+                        <label>100</label>
+                    </div>
+                    <div class="data-item">
+                        Temperature
+                    </div>
                 </div>
             </div>
         </article>
     </main>
     <aside>
-        <div class="container-item">
-            <button class="main-fill"></button>
-            <img src="{{asset('images/maintenance.png')}}">
+        <div class="main-container">
+            <div id="myBar"  class="main-fill"></div>
         </div>
+        <img src="{{asset('images/maintenance.png')}}">
     </aside>
 </div>
 </body>
