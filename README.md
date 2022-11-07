@@ -1,5 +1,5 @@
-This is our 3. Semester project
-composer install
-cp .env.example .env
-php artisan key:generate
+This is our 3. Semester project<br>
+composer install<br>
+cp .env.example .env<br>
+php artisan key:generate<br>
 php artisan serve
