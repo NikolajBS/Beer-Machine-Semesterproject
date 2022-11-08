@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-    <img src="{{asset('images/banner.PNG')}}">
+    <img src="{{asset('images/banner.jpg')}}">
 </header>
 <div class="flex-container">
     <aside>
@@ -17,113 +17,113 @@
         <button id="clearBtn">Clear</button>
     </aside>
     <main class="flex-container-main">
-        <article>
+        <article class="container-article">
             <div class="container-item">
                 <label>Barley</label>
-                <img src="{{asset('images/container.png')}}">
+                <img src="{{asset('images/container.jpg')}}">
             </div>
             <div class="container-item">
                 <label>Hops</label>
-                <img src="{{asset('images/container.png')}}">
+                <img src="{{asset('images/container.jpg')}}">
             </div>
             <div class="container-item">
                 <label>Malt</label>
-                <img src="{{asset('images/container.png')}}">
+                <img src="{{asset('images/container.jpg')}}">
             </div>
             <div class="container-item">
                 <label>Wheat</label>
-                <img src="{{asset('images/container.png')}}">
+                <img src="{{asset('images/container.jpg')}}">
             </div>
             <div class="container-item">
                 <label>Yeast</label>
-                <img src="{{asset('images/container.png')}}">
+                <img src="{{asset('images/container.jpg')}}">
             </div>
         </article>
         <article class="data-container">
             <div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/thermometer.png')}}">
-                        <label>100</label>
+                            <img src="{{asset('images/thermometer.jpg')}}">
+                            <input value="100">
                     </div>
                     <div class="data-item">
-                        Temperature
-                    </div>
-                </div>
-                <div class="test">
-                    <div class="data-item">
-                        <img src="{{asset('images/batch.png')}}">
-                        <label>100</label>
-                    </div>
-                    <div class="data-item">
-                        Temperature
+                        <p>Temperature</p>
                     </div>
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/bottle.png')}}">
-                        <label>100</label>
+                        <img src="{{asset('images/batch.jpg')}}">
+                        <input value="100">
                     </div>
                     <div class="data-item">
-                        Temperature
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="test">
-                    <div class="data-item">
-                        <img src="{{asset('images/humidity.png')}}">
-                        <label>100</label>
-                    </div>
-                    <div class="data-item">
-                        Temperature
+                        <p>Batch ID</p>
                     </div>
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/hmm.png')}}">
-                        <label>100</label>
+                        <img src="{{asset('images/bottle.jpg')}}">
+                        <input value="100">
                     </div>
                     <div class="data-item">
-                        Temperature
-                    </div>
-                </div>
-                <div class="test">
-                    <div class="data-item">
-                        <img src="{{asset('images/accepted.png')}}">
-                        <label>100</label>
-                    </div>
-                    <div class="data-item">
-                        Temperature
+                        <p>Bottles</p>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/vibration.png')}}">
-                        <label>100</label>
+                        <img src="{{asset('images/humid.jpg')}}">
+                        <input value="100">
                     </div>
                     <div class="data-item">
-                        Temperature
-                    </div>
-                </div>
-                <div class="test">
-                    <div class="data-item">
-                        <img src="{{asset('images/ppm.png')}}">
-                        <label>100</label>
-                    </div>
-                    <div class="data-item">
-                        Temperature
+                        <p>Humidity</p>
                     </div>
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/defected.png')}}">
-                        <label>100</label>
+                        <img src="{{asset('images/handle.jpg')}}">
+                        <input value="100">
                     </div>
                     <div class="data-item">
-                        Temperature
+                        <p>Amount to produce</p>
+                    </div>
+                </div>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/accept.jpg')}}">
+                        <input value="100">
+                    </div>
+                    <div class="data-item">
+                        <p>Acceptable products</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/vibration.jpg')}}">
+                        <input value="100">
+                    </div>
+                    <div class="data-item">
+                        <p>Vibration</p>
+                    </div>
+                </div>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/ppm.jpg')}}">
+                        <input value="100">
+                    </div>
+                    <div class="data-item">
+                        <p>Products per minute</p>
+                    </div>
+                </div>
+                <div class="test">
+                    <div class="data-item">
+                        <img src="{{asset('images/denied.jpg')}}">
+                        <input value="100">
+                    </div>
+                    <div class="data-item">
+                        <p>Defect products</p>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
         <div class="main-container">
             <div id="myBar"  class="main-fill"></div>
         </div>
-        <img src="{{asset('images/maintenance.png')}}">
+        <img src="{{asset('images/main.jpg')}}">
     </aside>
 </div>
 </body>

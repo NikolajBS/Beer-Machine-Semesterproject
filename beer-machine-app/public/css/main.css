@@ -1,6 +1,7 @@
 .flex-container{
     display: flex;
     height: 80%;
+
 }
 body,html{
     margin: 0;
@@ -8,9 +9,13 @@ body,html{
 }
 
 header img{
-    height: 20%;
     width: 100%;
+    height: 100%;
 }
+header{
+    height: 20%;
+}
+
 aside{
     width: 500px;
     display: flex;
@@ -30,32 +35,47 @@ aside button{
 }
 .flex-container-main{
     width:100%;
+    height: 100%;
 }
 
 article{
     display: flex;
     justify-content: space-between;
-    height: 50%;
+
+/*clean up below this point*/
 }
 .data-container {
     flex-direction: column;
+    margin-top: 40px;
 
 }
 .data-container div{
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
 }
-article label{
-    margin-top: 20px;
-}
+
 .data-item{
     display: flex;
-    flex-direction: row;
     align-items: center;
-    flex: 1;
+    align-content: center;
     width: 120px;
     font-size: 25px;
+
 }
+.data-item img{
+    padding-left: 15px;
+}
+.data-item p{
+    margin-top: 0;
+}
+.data-item input{
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 80px;
+}
+
 .container-item{
     display: flex;
     flex-direction: column;
@@ -80,6 +100,7 @@ article label{
     align-items: center;
     align-content: center;
     width: 100%;
+    height: 100%;
 }
 .test label{
     font-weight: bold;
