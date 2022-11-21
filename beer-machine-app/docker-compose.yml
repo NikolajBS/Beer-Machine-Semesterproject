@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+    beers-database:
+        image: mysql:5.7
+        environment:
+            MYSQL_DATABASE: beers
+            MYSQL_ROOT_PASSWORD: secret
+        ports:
+            - "3306:3306"
