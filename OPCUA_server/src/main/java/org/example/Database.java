@@ -1,12 +1,18 @@
 package org.example;
 
-import org.bouncycastle.util.Times;
 
 import java.sql.*;
 import java.time.Instant;
 
 public class Database {
+
+    public void storeData(){
+
+    }
+
+
     public static void main(String[] args) {
+
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/beers","root","secret");
@@ -19,5 +25,7 @@ public class Database {
         catch (Exception e){
             e.printStackTrace();
         }
+
+
     }
 }
