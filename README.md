@@ -6,4 +6,4 @@ php artisan serve
 
 To run the database write this within the beer-machine-app directory and remember to have starter docker desktop before
 
-docker-compose up -d
+docker compose up -d
