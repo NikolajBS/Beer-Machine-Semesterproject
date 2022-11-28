@@ -40,29 +40,31 @@ public class ReadExample {
 
         System.out.println(server.getNode("::Program:Cube.Admin.ProdProcessedCount"));
         System.out.println(server.getNode("::Program:Cube.Admin.ProdDefectiveCount"));
-      /*  server.getNode("::Program:Cube.Admin.StopReason.ID");
-        server.getNode("::Program:Cube.Admin.StopReason.Value");
-        server.getNode("::Program:Cube.Admin.Parameter[0].Value");
+
+        System.out.println(server.getNode("::Program:Cube.Admin.StopReason.ID"));
+        System.out.println(server.getNode("::Program:Cube.Admin.StopReason.Value"));
+        System.out.println(server.getNode("::Program:Cube.Admin.Parameter[0].Value"));
 
         //STATUS CALLS
-        server.getNode("::Program:Cube.Status.StateCurrent");
-        server.getNode("::Program:Cube.Status.MachSpeed");
-        server.getNode("::Program:Cube.Status.CurMachSpeed");
-        server.getNode("::Program:Cube.Status.Parameter[0].Value");
-        server.getNode("::Program:Cube.Status.Parameter[1].Value");
-        server.getNode("::Program:Cube.Status.Parameter[2].Value");
-        server.getNode("::Program:Cube.Status.Parameter[3].Value");
-        server.getNode("::Program:Cube.Status.Parameter[4].Value");
+        System.out.println(server.getNode("::Program:Cube.Status.StateCurrent"));
+        System.out.println(server.getNode("::Program:Cube.Status.MachSpeed"));
+        System.out.println(server.getNode("::Program:Cube.Status.CurMachSpeed"));
+        System.out.println(server.getNode("::Program:Cube.Status.Parameter[0].Value"));
+        System.out.println(server.getNode("::Program:Cube.Status.Parameter[1].Value"));
+        System.out.println(server.getNode("::Program:Cube.Status.Parameter[2].Value"));
+        System.out.println(server.getNode("::Program:Cube.Status.Parameter[3].Value"));
+        System.out.println(server.getNode("::Program:Cube.Status.Parameter[4].Value"));
 
         //COMMAND CALLS
-        server.getNode("::Program:Cube.Command.MachSpeed");
-        server.getNode("::Program:Cube.Command.CntrlCmd");
-        server.getNode("::Program:Cube.Command.CmdChangeRequest");
-        server.getNode("::Program:Cube.Command.Parameter[0].Value");
-        server.getNode("::Program:Cube.Command.Parameter[1].Value");
-        server.getNode("::Program:Cube.Command.Parameter[2].Value");
+        System.out.println(server.getNode("::Program:Cube.Command.MachSpeed"));
+        System.out.println(server.getNode("::Program:Cube.Command.CntrlCmd"));
+        System.out.println(server.getNode("::Program:Cube.Command.CmdChangeRequest"));
+        System.out.println(server.getNode("::Program:Cube.Command.Parameter[0].Value"));
+        System.out.println(server.getNode("::Program:Cube.Command.Parameter[1].Value"));
+        System.out.println(server.getNode("::Program:Cube.Command.Parameter[2].Value"));
 
-        */
+        System.out.println("prut");
+
 
         /* Random endpoint */
         //NodeId nodeId  = NodeId.parse("ns=2;i=1002");
@@ -107,29 +109,16 @@ public class ReadExample {
         }
     }
 
-    public Object getNode(String name) {
+    public float getNode(String name) {
         try {
             NodeId nodeId = new NodeId(6, name);
             DataValue dataValue = client.readValue(0, TimestampsToReturn.Both, nodeId).get();
             Variant variant = dataValue.getValue();
-            //int myVariable = (int) variant.getValue();
-            Object myVariable = variant.getValue();
-            //System.out.println(myVariable instanceof Integer);
-            //System.out.println("myVariable= " + myVariable);
-            if(myVariable instanceof Integer){
-                return (Integer) myVariable;
-            }
-            else if (myVariable instanceof Float){
-                return (Float) myVariable;
-            }
-            else{
-                return (boolean) myVariable;
-            }
-
+            return (float) variant.getValue();
         } catch (Exception e) { //java.lang.InterruptedException, java.util.concurrent.ExecutionException
             System.out.println("lol");
         }
-        return null;
+        return 0;
     }
 
 
