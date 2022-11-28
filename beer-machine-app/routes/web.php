@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::view('home','home');
+
+Route::get('register', [Controller::class, 'changeEdit'])->name('change');
 
 Route::get('elements',function (){
     return Inventory::all();

@@ -15,6 +15,10 @@
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
+        <button onclick="location.href='{{ route('change') }}'">
+            Edit</button>
+
+
     </aside>
     <main class="flex-container-main">
         <article class="container-article">
