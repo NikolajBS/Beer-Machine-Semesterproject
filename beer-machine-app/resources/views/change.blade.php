@@ -6,16 +6,16 @@
 </head>
 <body>
 <header>
-    <img src="{{asset('images/banner.jpg')}}">
+    <img src="{{asset('images/banner.jpg')}}" onclick="location.href='{{ route('return') }}'">
 </header>
 <div class="flex-container">
 
     <main class="flex-container-main">
         <label>Product Amount</label> <br>
-        <input></input> <br><br>
+        <input name="amount"></input> <br><br>
 
         <label>Product Type</label> <br>
-        <select id="Beers"> Beers
+        <select name="beersType"> Beers
             <option value="0"> Pilsner</option>
             <option value="1"> Wheat </option>
             <option value="2"> IPA</option>

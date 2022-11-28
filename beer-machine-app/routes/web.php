@@ -22,6 +22,8 @@ Route::get('/', function () {
 });
 Route::view('home','home');
 
+Route::get('home', [Controller::class, 'returnHome'])->name('return');
+
 Route::get('register', [Controller::class, 'changeEdit'])->name('change');
 
 Route::post('home',[BeerController::class,'changeBatch'])->name('batch');
