@@ -10,8 +10,8 @@
 </header>
 <div class="flex-container">
     <aside>
-        <button id="resetBtn">Reset</button>
-        <button id="startBtn">Start</button>
+        <button id="resetBtn" >Reset</button>
+        <button id="startBtn" onclick="start()">Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
@@ -44,7 +44,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input value="100">
+                            <input id="temp-id">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -53,7 +53,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input value="100">
+                        <input id="batch-id">
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -62,7 +62,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/bottle.jpg')}}">
-                        <input value="100">
+                        <input id="bottled-id">
                     </div>
                     <div class="data-item">
                         <p>Bottles</p>
@@ -73,7 +73,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humid.jpg')}}">
-                        <input value="100">
+                        <input id="humidity-id">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -82,7 +82,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/handle.jpg')}}">
-                        <input value="100">
+                        <input id="amount-id">
                     </div>
                     <div class="data-item">
                         <p>Amount to produce</p>
@@ -91,7 +91,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.jpg')}}">
-                        <input value="100">
+                        <input id="accept-id">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -102,7 +102,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.jpg')}}">
-                        <input value="100">
+                        <input id="vibration-id">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -111,7 +111,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/ppm.jpg')}}">
-                        <input value="100">
+                        <input id="ppm-id">
                     </div>
                     <div class="data-item">
                         <p>Products per minute</p>
@@ -120,7 +120,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
-                        <input value="100">
+                        <input id="defect-id">
                     </div>
                     <div class="data-item">
                         <p>Defect products</p>

@@ -38,8 +38,8 @@ public class ReadExample {
 
         //ADMIN CALLS
 
-        System.out.println(server.getNode("::Program:Cube.Admin.ProdProcessedCount"));
-        System.out.println(server.getNode("::Program:Cube.Admin.ProdDefectiveCount"));
+        System.out.println("prodcount" +server.getNode("::Program:Cube.Admin.ProdProcessedCount"));
+        System.out.println("defective count" + server.getNode("::Program:Cube.Admin.ProdDefectiveCount"));
 
         System.out.println(server.getNode("::Program:Cube.Admin.StopReason.ID"));
         System.out.println(server.getNode("::Program:Cube.Admin.StopReason.Value"));
@@ -62,8 +62,6 @@ public class ReadExample {
         System.out.println(server.getNode("::Program:Cube.Command.Parameter[0].Value"));
         System.out.println(server.getNode("::Program:Cube.Command.Parameter[1].Value"));
         System.out.println(server.getNode("::Program:Cube.Command.Parameter[2].Value"));
-
-        System.out.println("prut");
 
 
         /* Random endpoint */
@@ -116,14 +114,9 @@ public class ReadExample {
             Variant variant = dataValue.getValue();
             return (float) variant.getValue();
         } catch (Exception e) { //java.lang.InterruptedException, java.util.concurrent.ExecutionException
-            System.out.println("lol");
+            e.printStackTrace();
         }
         return 0;
     }
-
-
-
-    public static IdentityProvider getIdentityProvider() {
-        return new UsernameProvider("sdu", "1234");
-    }
+    
 }
