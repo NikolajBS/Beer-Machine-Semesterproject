@@ -1,6 +1,9 @@
 <?php
 
+
+use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
+
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +24,12 @@ Route::get('/', function () {
 });
 Route::view('home','home');
 
+
+Route::get('/test', function (){
+    return new UserResource(Inventory::find(1));=======
 Route::get('register', [Controller::class, 'changeEdit'])->name('change');
 
 Route::get('elements',function (){
     return Inventory::all();
+
 });
