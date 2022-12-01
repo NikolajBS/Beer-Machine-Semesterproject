@@ -112,7 +112,11 @@
       <path value="$PROJECT_DIR$/beer-machine-app/vendor/theseer/tokenizer" />
     </include_path>
   </component>
+<<<<<<< Updated upstream
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
+=======
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
+>>>>>>> Stashed changes
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpUnit">
