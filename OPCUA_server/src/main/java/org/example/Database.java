@@ -13,12 +13,18 @@ import java.io.FileOutputStream;
 
 public class Database {
 
+    // note: loop while amount given from website is below what is incremented through writecmd on OCP UA
+    // then exit, and continue to listen to GET calls.
+
     public void storeData(){
+        // get data from the machine and store it to DB(id,producttype,amount,temp,humidity)
+    }
+
+    public void readData(int id){
         //
     }
-    public void readData(){
-        //
-    }
+
+    // create pdf with id, product type, amount, temperature and humidity
     public static void logBatch(int id, String productType, int amount, double temperature, double humidity){
         try{
             Document document = new Document();

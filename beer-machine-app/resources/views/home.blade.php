@@ -15,7 +15,7 @@
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
-        <button onclick="location.href='{{ route('change') }}'">
+        <button onclick="location.href='{{ route('submit') }}'">
             Edit</button>
 
 

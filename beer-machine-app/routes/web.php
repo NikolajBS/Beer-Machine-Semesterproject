@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ProductController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 
@@ -22,14 +23,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::view('home','home');
+Route::view('home','home')->name('home');
 
 
-Route::get('/test', function (){
-    return new UserResource(Inventory::find(1));=======
-Route::get('register', [Controller::class, 'changeEdit'])->name('change');
+//Route::get('/test', function () {
+//    return new UserResource(Inventory::find(1));
+//});
+Route::get('register', [ProductController::class, 'index'])->name('submit');
+Route::post('register',[ProductController::class,'store'])->name('store');
 
-Route::get('elements',function (){
-    return Inventory::all();
-
+Route::get('data',function (){
+    return session()->pull('product');
 });
+
+//Route::get('elements',function (){
+//    return Inventory::all();
+//
+//});
