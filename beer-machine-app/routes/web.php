@@ -5,13 +5,16 @@ use App\Http\Controllers\ProductController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 
+use App\Models\Batch;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
 
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes//Route::get('elements',function (){
+//    return Inventory::all();
+//
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -20,23 +23,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('production/{batch}', [ProductController::class,'index'])->name('home');
+
+Route::get('/test', function () {
+    return new UserResource(Batch::find(1));
 });
-Route::view('home','home')->name('home');
-
-
-//Route::get('/test', function () {
-//    return new UserResource(Inventory::find(1));
-//});
-Route::get('register', [ProductController::class, 'index'])->name('submit');
+Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
+Route::get('data',[ProductController::class,'retrieveData']);
 
-Route::get('data',function (){
-    return session()->pull('product');
-});
 
-//Route::get('elements',function (){
-//    return Inventory::all();
-//
-//});

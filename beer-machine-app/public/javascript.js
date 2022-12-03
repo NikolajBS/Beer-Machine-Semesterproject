@@ -1,7 +1,5 @@
 window.onload = function (){
 
-
-
     const select = document.getElementById('product-type');
     var input_amount = document.getElementById('amount-id');
     select.onchange = function (){
@@ -33,9 +31,7 @@ window.onload = function (){
                 if (this.readyState == 4 && this.status == 200) {
 
                     data = JSON.parse(this.responseText)
-                    // setting value to be displayed
-                    // further development - which should be updated instantly(0 seconds)
-                    // and others every 3rd second? ie. temp/humidity every 5th sec
+
                     document.getElementById('vibration-id').value = data[0].amount;
                     document.getElementById('temp-id').value = data[0].amount;
                     document.getElementById('batch-id').value = data[0].amount;
@@ -47,7 +43,7 @@ window.onload = function (){
                     document.getElementById('defect-id').value = data[0].amount;
                 } };
             // getting response from elements url
-        xhttp.open("GET", "elements", true);
+        xhttp.open("GET", "127.0.0.1:8000/elements", true);
         xhttp.send();
 
             // Do this every 0 seconds
