@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('production/{batch}', [ProductController::class,'index'])->name('home');
+Route::get('home', [ProductController::class,'index'])->name('home');
 
 Route::get('/test', function () {
     return new UserResource(Batch::find(1));

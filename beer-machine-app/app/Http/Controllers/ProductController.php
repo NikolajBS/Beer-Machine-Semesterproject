@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    public function index(Batch $batch){
-        return view('home',['batch'=>$batch]);
+    public function index(){
+        return view('home');
     }
 
     public function create(){
@@ -26,7 +26,7 @@ class ProductController extends Controller
         $batch->amount = request('amount');
         $batch->save();
 
-        return redirect()->route('home',['batch'=>$batch]);
+        return redirect()->route('home');
     }
     public function retrieveData(){
         return new UserResource(Batch::latest()->first());

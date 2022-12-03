@@ -57,7 +57,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input type="text" readonly id="batch-id" value="#{{$batch->id}}" >
+                        <input type="text" readonly id="batch-id" >
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -86,7 +86,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/handle.jpg')}}" >
-                        <input readonly id="amount-id" value="{{$batch->amount}}">
+                        <input readonly id="amount-id">
                     </div>
                     <div class="data-item">
                         <p>Amount to produce</p>

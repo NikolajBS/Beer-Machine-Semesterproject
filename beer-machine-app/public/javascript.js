@@ -24,30 +24,23 @@ window.onload = function (){
         input_amount.setAttribute("min",1);
     }
 }
+
+
         function start(){
-        setInterval(function () {
+            let csrf = document.querySelector('meta[name="csrf-token"]').content;
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+              if (this.readyState == 4 && this.status == 200) {
 
-                    data = JSON.parse(this.responseText)
-
-                    document.getElementById('vibration-id').value = data[0].amount;
-                    document.getElementById('temp-id').value = data[0].amount;
-                    document.getElementById('batch-id').value = data[0].amount;
-                    document.getElementById('bottled-id').value = data[0].amount;
-                    document.getElementById('humidity-id').value = data[0].amount;
-                    document.getElementById('amount-id').value = data[0].amount;
-                    document.getElementById('accept-id').value = data[0].amount;
-                    document.getElementById('ppm-id').value = data[0].amount;
-                    document.getElementById('defect-id').value = data[0].amount;
-                } };
-            // getting response from elements url
-        xhttp.open("GET", "127.0.0.1:8000/elements", true);
-        xhttp.send();
-
-            // Do this every 0 seconds
-            }, 0);
+                data = JSON.parse(this.responseText)
+                console.log(data);
+              }
+            };
+            xhttp.open("POST", "opc.tcp://127.0.0.1:4840", true);
+            xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
+            xhttp.setRequestHeader('Accept', 'application/json');
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify({amount:300}));
     }
     // document.getElementById("resetBtn").onclick=function (){
     //     document.getElementById("startBtn").onclick=function (){
