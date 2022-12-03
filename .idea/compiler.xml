@@ -7,7 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Beer-Machine-Semesterproject" />
+        <module name="Beer-Machine-Semesterproject_test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Beer-Machine-Semesterproject_test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
