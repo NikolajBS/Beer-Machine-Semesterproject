@@ -37,15 +37,9 @@ public class Database {
 //            e.printStackTrace();
 //        }
     }
-    // note: loop "while amount" given from website  is incremented through writecmd on OCP UA
-    // then exit the loop, and continue to listen to GET calls.
 
     public void storeData(){
-        // get data from the machine and store it to DB(id,producttype,amount,temp,humidity)
-    }
-
-    public void readData(int id){
-        //
+        // when the batch is done, we must save the data in the DB here
     }
 
     // create pdf with id, product type, amount, temperature and humidity

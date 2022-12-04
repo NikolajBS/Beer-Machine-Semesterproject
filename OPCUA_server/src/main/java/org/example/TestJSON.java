@@ -40,7 +40,6 @@ public class TestJSON {
                 while ((inputLine = reader.readLine()) != null) {
                     response.append(inputLine);
                     System.out.println(response);
-
                 }
                 reader.close();
                 json = new JSONObject(String.valueOf(response));

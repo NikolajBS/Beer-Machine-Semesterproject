@@ -1,7 +1,27 @@
 window.onload = function (){
 
+
+document.getElementById('startBtn').onclick = function (){
+    let csrf = document.querySelector('meta[name="csrf-token"]').content;
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+
+        data = JSON.parse(this.responseText)
+        console.log(data);
+      }
+    };
+    xhttp.open("POST", "register", true);
+    xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
+    xhttp.setRequestHeader('Accept', 'application/json');
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify({amount:300,type:0,speed:200}));
+    //console.log("yep");
+
+}
+
     const select = document.getElementById('product-type');
-    var input_amount = document.getElementById('amount-id');
+    var input_amount = document.getElementById('speed-id');
     select.onchange = function (){
     if(select.value==="0"){
         input_amount.setAttribute("max",600);
@@ -24,29 +44,4 @@ window.onload = function (){
         input_amount.setAttribute("min",1);
     }
 }
-
-
-        function start(){
-            let csrf = document.querySelector('meta[name="csrf-token"]').content;
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 200) {
-
-                data = JSON.parse(this.responseText)
-                console.log(data);
-              }
-            };
-            xhttp.open("POST", "opc.tcp://127.0.0.1:4840", true);
-            xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
-            xhttp.setRequestHeader('Accept', 'application/json');
-            xhttp.setRequestHeader('Content-Type', 'application/json');
-            xhttp.send(JSON.stringify({amount:300}));
-    }
-    // document.getElementById("resetBtn").onclick=function (){
-    //     document.getElementById("startBtn").onclick=function (){
-    //         var bar = document.getElementById("myBar");
-    //         var height = 100;
-    //         bar.style.height = height+'%';
-    //     }
-    // };
 }

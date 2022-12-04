@@ -19,11 +19,13 @@ class ProductController extends Controller
     public function store(Request $request){
         //validation
         $request->validate(['type'=>'required|between:0,5',
-            'amount'=>'required|min:1|numeric|']);
+            'speed'=>'required|min:1|numeric|',
+            'amount'=>'required|min:1|max:65535|numeric']);
 
         $batch = new Batch();
         $batch->type = request('type');
         $batch->amount = request('amount');
+        $batch->speed = request('speed');
         $batch->save();
 
         return redirect()->route('home');

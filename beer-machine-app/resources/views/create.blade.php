@@ -16,8 +16,10 @@
                     <option value="4">Ale</option>
                     <option value="5">Alcohol free</option>
                 </select>
+                <label>Speed</label>
+                <input type="number" id="speed-id" name="speed" max="600" min="1">
                 <label>Amount</label>
-                <input type="number" id="amount-id" name="amount" max="600" min="1">
+                <input type="number" name="amount" max="65535" min="1">
                 <button type="submit">Submit</button>
             </form>
         </div>

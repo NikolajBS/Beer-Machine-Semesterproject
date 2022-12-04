@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src={{asset("javascript.js")}}></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <header>
@@ -11,7 +12,7 @@
 <div class="flex-container">
     <aside>
         <button id="resetBtn" >Reset</button>
-        <button id="startBtn" onclick="start()">Start</button>
+        <button id="startBtn">Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
