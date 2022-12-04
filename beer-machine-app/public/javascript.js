@@ -1,25 +1,25 @@
-window.onload = function (){
+window.onload = function () {
 
 
-document.getElementById('startBtn').onclick = function (){
-    let csrf = document.querySelector('meta[name="csrf-token"]').content;
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
+    document.getElementById('startBtn').onclick = function () {
+        // let csrf = document.querySelector('meta[name="csrf-token"]').content;
+        // let xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function () {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //
+        //         data = JSON.parse(this.responseText)
+        //         console.log(data);
+        //     }
+        // };
+        // xhttp.open("POST", "register", true);
+        // xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
+        // xhttp.setRequestHeader('Accept', 'application/json');
+        // xhttp.setRequestHeader('Content-Type', 'application/json');
+        // xhttp.send(JSON.stringify({amount: 300, type: 0, speed: 200}));
+        console.log("yep");
 
-        data = JSON.parse(this.responseText)
-        console.log(data);
-      }
-    };
-    xhttp.open("POST", "register", true);
-    xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
-    xhttp.setRequestHeader('Accept', 'application/json');
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify({amount:300,type:0,speed:200}));
-    //console.log("yep");
-
+    }
 }
-
     const select = document.getElementById('product-type');
     var input_amount = document.getElementById('speed-id');
     select.onchange = function (){
@@ -43,5 +43,4 @@ document.getElementById('startBtn').onclick = function (){
         input_amount.setAttribute("max",125);
         input_amount.setAttribute("min",1);
     }
-}
 }
