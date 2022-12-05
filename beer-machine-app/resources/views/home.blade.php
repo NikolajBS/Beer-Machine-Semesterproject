@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src={{asset("javascript.js")}}></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <header>
@@ -11,11 +12,11 @@
 <div class="flex-container">
     <aside>
         <button id="resetBtn" >Reset</button>
-        <button id="startBtn" onclick="start()">Start</button>
+        <button id="startBtn">Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
-        <button onclick="location.href='{{ route('change') }}'">
+        <button onclick="location.href='{{ route('submit') }}'">
             Edit</button>
 
 
@@ -48,7 +49,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input id="temp-id">
+                            <input readonly id="temp-id">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -57,7 +58,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input id="batch-id">
+                        <input type="text" readonly id="batch-id" >
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -66,7 +67,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/bottle.jpg')}}">
-                        <input id="bottled-id">
+                        <input readonly  id="bottled-id">
                     </div>
                     <div class="data-item">
                         <p>Bottles</p>
@@ -77,7 +78,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humid.jpg')}}">
-                        <input id="humidity-id">
+                        <input readonly  id="humidity-id">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -85,8 +86,8 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/handle.jpg')}}">
-                        <input id="amount-id">
+                        <img src="{{asset('images/handle.jpg')}}" >
+                        <input readonly id="amount-id">
                     </div>
                     <div class="data-item">
                         <p>Amount to produce</p>
@@ -95,7 +96,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.jpg')}}">
-                        <input id="accept-id">
+                        <input readonly  id="accept-id">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -106,7 +107,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.jpg')}}">
-                        <input id="vibration-id">
+                        <input readonly id="vibration-id">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -115,7 +116,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/ppm.jpg')}}">
-                        <input id="ppm-id">
+                        <input readonly  id="ppm-id">
                     </div>
                     <div class="data-item">
                         <p>Products per minute</p>
@@ -124,7 +125,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
-                        <input id="defect-id">
+                        <input readonly  id="defect-id">
                     </div>
                     <div class="data-item">
                         <p>Defect products</p>

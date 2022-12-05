@@ -1,30 +1,35 @@
 package org.example;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class TestJSON {
-    private JSONArray getAPIData(){
-        String GET_URL = "http://127.0.0.1:8000/test";
-        URL obj = null;
+
+    private static final String GET_URL ="http://127.0.0.1:8000/data";
+
+    private JSONObject getAPIData() {
+
+        URL obj;
         HttpURLConnection con = null;
         int responseCode = 0;
-        JSONArray json = null;
+        JSONObject json = null;
         try {
             obj = new URL(GET_URL);
             con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
             responseCode = con.getResponseCode();
+            // response code 200 is successful connection.
             System.out.println("GET Response Code :: " + responseCode);
         } catch (IOException e){
             e.printStackTrace();
         }
-
 
         try {
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -37,7 +42,8 @@ public class TestJSON {
                     System.out.println(response);
                 }
                 reader.close();
-                json = new JSONArray(String.valueOf(response));
+                json = new JSONObject(String.valueOf(response));
+
             } else {
                 System.out.println("GET failed");
             }
@@ -48,6 +54,10 @@ public class TestJSON {
     }
 
     public static void main(String[] args) {
-        new TestJSON().getAPIData();
+        JSONObject jsonObject = new TestJSON().getAPIData();
+        // how to retrieve values from specific keys
+        System.out.println(jsonObject.getJSONObject("data").getInt("id"));
+        System.out.println(jsonObject.getJSONObject("data").getInt("amount"));
+        System.out.println(jsonObject.getJSONObject("data").getString("type"));
     }
 }
