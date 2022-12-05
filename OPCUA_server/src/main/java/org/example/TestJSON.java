@@ -1,7 +1,6 @@
 package org.example;
 
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class TestJSON {
-    private JSONObject getAPIData(){
-        String GET_URL = "http://127.0.0.1:8000/test";
-        URL obj = null;
+
+    private static final String GET_URL = "http://127.0.0.1:8000/data";
+
+    private JSONObject getAPIData() {
+
+        URL obj;
         HttpURLConnection con = null;
         int responseCode = 0;
         JSONObject json = null;
@@ -21,11 +23,11 @@ public class TestJSON {
             con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
             responseCode = con.getResponseCode();
+            // response code 200 is successful connection.
             System.out.println("GET Response Code :: " + responseCode);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         try {
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -39,17 +41,19 @@ public class TestJSON {
                 }
                 reader.close();
                 json = new JSONObject(String.valueOf(response));
+
             } else {
                 System.out.println("GET failed");
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return json;
     }
+
     private void sendData() {
         String POST_URL = "http://127.0.0.1:8000/api/getdata";
-        String json ="{\"test\": 1}";
+        String json = "{\"test\": 1}";
         URL obj = null;
         HttpURLConnection con = null;
         int responseCode = 0;
@@ -79,5 +83,5 @@ public class TestJSON {
         //new TestJSON().getAPIData();
         new TestJSON().sendData();
 
-        }
     }
+}
