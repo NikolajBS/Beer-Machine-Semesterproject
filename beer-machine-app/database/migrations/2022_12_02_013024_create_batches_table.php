@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->integer('type');
             $table->integer('speed');
             $table->integer('amount');
             $table->timestamps();

@@ -18,6 +18,7 @@ import org.eclipse.milo.opcua.stack.core.types.structured.MonitoringParameters;
 import org.eclipse.milo.opcua.stack.core.types.structured.ReadValueId;
 import org.eclipse.milo.opcua.stack.core.util.EndpointUtil;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -27,9 +28,11 @@ public class Subscription {
     public static void main(String[] args) {
         try
         {
+
             List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://127.0.0.1:4840").get();
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
+
 
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
@@ -39,14 +42,14 @@ public class Subscription {
                     break;
                 }
             }
-
             OpcUaClient client = OpcUaClient.create(cfg.build());
             client.connect().get();
+
             //total amount
             nodeCreation(client,"::Program:Cube.Admin.ProdProcessedCount");
             //defect amount
             nodeCreation(client,"::Program:Cube.Admin.ProdDefectiveCount");
-            //machine speed SHOULD THIS BE DELETED? NOT UPDATED AT ANY POINT. MODIFY AS COMMON READ
+            //this should be written to instead. We never update this value
             nodeCreation(client,"::Program:Cube.Command.MachSpeed");
             //temperature
             nodeCreation(client,"::Program:Cube.Status.Parameter[3].Value");
@@ -54,21 +57,43 @@ public class Subscription {
             nodeCreation(client,"::Program:Cube.Status.Parameter[2].Value");
             // vibration
             nodeCreation(client,"::Program:Cube.Status.Parameter[4].Value");
+            //batch id
+
             // let the example run forever
             while(true)
             {
                 Thread.sleep(1000);
             }
-        }
-        catch(Throwable ex)
-        {
-            ex.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     // remake this method, so that it redirects the values and POSTs to our website.
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
-        System.out.println("subscription value received: item="+ item.getReadValueId().getNodeId() + ", value=" + value.getValue());
-        // and get acceptable products by total products - defected products
+
+        // read  to get batch id
+        System.out.println("subscription value received: item="+ item.getReadValueId().getNodeId().getIdentifier() + ", value=" + value.getValue().getValue());
+
+        String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
+        try {
+            switch (itemName) {
+
+                case "::Program:Cube.Admin.ProdProcessedCount":
+                    TestJSON.sendPOST("amount", (Float) value.getValue().getValue(), 2);
+                case "::Program:Cube.Admin.ProdDefectiveCount":
+                    TestJSON.sendPOST("defective", (Float) value.getValue().getValue(), 2);
+                case "::Program:Cube.Command.MachSpeed":
+                    TestJSON.sendPOST("speed", (Float) value.getValue().getValue(), 2);
+                case "::Program:Cube.Status.Parameter[3].Value":
+                    TestJSON.sendPOST("temperature", (Float) value.getValue().getValue(), 2);
+                case "::Program:Cube.Status.Parameter[2].Value":
+                    TestJSON.sendPOST("humidity", (Float) value.getValue().getValue(), 2);
+                case "::Program:Cube.Status.Parameter[4].Value":
+                    TestJSON.sendPOST("vibration", (Float) value.getValue().getValue(), 2);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private static void nodeCreation(OpcUaClient client, String identifier) throws ExecutionException, InterruptedException {
         NodeId humidity  = new NodeId(6, identifier);

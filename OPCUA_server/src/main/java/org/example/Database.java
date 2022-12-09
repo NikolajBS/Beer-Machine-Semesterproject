@@ -1,42 +1,41 @@
 package org.example;
 
-
-import java.awt.*;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.*;
-import java.time.Instant;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.FileOutputStream;
+
+import java.sql.*;
+import java.time.Instant;
 import java.util.stream.Stream;
 
 public class Database {
+
     public static void main(String[] args) {
-        double[] temp = new double[]{9.2,1.3,1.4,1.8};
-        double[] humidity = new double[]{0.2,32.2,12.3,19.2};
-        logBatch(1,"Alcohol",10,temp,humidity);
-//        try{
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/beers","root","secret");
-//            PreparedStatement preState = connect.prepareStatement("INSERT INTO inventories (name, amount, created_at) VALUES(?,?,?)");
-//            preState.setString(1, "Barley");
-//            preState.setInt(2, 35000);
-//            preState.setTimestamp(3, Timestamp.from(Instant.now()));
-//            preState.execute();
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
+//        double[] temp = new double[]{9.2,1.3,1.4,1.8};
+//        double[] humidity = new double[]{0.2,32.2,12.3,19.2};
+//        logBatch(1,"Alcohol",10,temp,humidity);
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/beers","root","secret");
+            PreparedStatement preState = connect.prepareStatement("INSERT INTO batches (type, amount, speed) VALUES(?,?,?)");
+            preState.setInt(1, 0);
+            preState.setInt(2, 35000);
+            preState.setInt(3,200);
+            PreparedStatement temp = connect.prepareStatement("INSERT INTO temperatures (temperature,batch_id) VALUES(?,?)");
+            temp.setDouble(1, 23.1);
+            temp.setInt(2, 2);
+            preState.execute();
+            temp.execute();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
+
 
     public void storeData(){
         // when the batch is done, we must save the data in the DB here
@@ -77,6 +76,10 @@ public class Database {
         }
     }
 
+    // insert received ID from laravel into here and into OPC UA. we take float because everything we store is float.
+    private static void addValuesToDB(int batchID, float value){
+
+    }
     private static void addTableHeader(PdfPTable table) {
         Stream.of("Time elapsed in seconds", "Temperature", "Humidity")
                 .forEach(columnTitle -> {

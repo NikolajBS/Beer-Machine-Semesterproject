@@ -40,7 +40,7 @@ public class Write {
             }
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
-                if(endpoints.get(i).getSecurityMode().name().equals("SignAndEncrypt")){ //None or SignAndEncrypt
+                if(endpoints.get(i).getSecurityMode().name().equals("None")){ //None or SignAndEncrypt
                     EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(i), "127.0.0.1", 4840);
                     cfg.setEndpoint(configPoint);
                     break;

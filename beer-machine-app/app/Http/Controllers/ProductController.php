@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BatchResource;
 use App\Http\Resources\UserResource;
 use App\Models\Batch;
+use App\Models\Humidity;
+use App\Models\State;
+use App\Models\Temperature;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -27,10 +31,35 @@ class ProductController extends Controller
         $batch->amount = request('amount');
         $batch->speed = request('speed');
         $batch->save();
-
+//        $request->session()->save();
         return redirect()->route('home');
     }
-    public function retrieveData(){
-        return new UserResource(Batch::latest()->first());
+
+    function testing(){
+//        $batch = new Batch();
+//        $batch->amount =100;
+//        $batch->type =0;
+//        $batch->speed=300;
+//        $batch->save();
+//
+//        // create humidity
+//        $humidity = new Humidity();
+//        $humidity->humidity = 33.2;
+//        $humidity->batch_id = $batch->id;
+//        $humidity->save();
+//
+//        //create temp
+//        $state = new State();
+//        $state->stoppingSeconds=100.3;
+//        $state->startingSeconds=100.3;
+//        $state->batch_id = $batch->id;
+//        $state->save();
+
+//        // create state
+//        $temp = new Temperature();
+//        $temp->temperature = 29.3;
+//        $temp->batch_id = $batch->id;
+//        $temp->save();
+
     }
 }

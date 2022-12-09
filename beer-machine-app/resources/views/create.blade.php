@@ -10,11 +10,11 @@
                 <label>Type</label>
                 <select id="product-type" name="type">
                     <option selected="selected" value="0">Pilsner</option>
-                    <option value="1">Wheat</option>
-                    <option value="2">IPA</option>
-                    <option value="3">Stout</option>
-                    <option value="4">Ale</option>
-                    <option value="5">Alcohol free</option>
+                    <option value=1>Wheat</option>
+                    <option value=2>IPA</option>
+                    <option value=3>Stout</option>
+                    <option value=4>Ale</option>
+                    <option value=5>Alcohol free</option>
                 </select>
                 <label>Speed</label>
                 <input type="number" id="speed-id" name="speed" max="600" min="1">

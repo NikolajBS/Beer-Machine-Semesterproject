@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src={{asset("javascript.js")}}></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -12,14 +13,12 @@
 <div class="flex-container">
     <aside>
         <button id="resetBtn" >Reset</button>
-        <button id="startBtn">Start</button>
+        <button id="startBtn"onclick="test()" >Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
         <button onclick="location.href='{{ route('submit') }}'">
             Edit</button>
-
-
     </aside>
     <main class="flex-container-main">
         <article class="container-article">
@@ -142,4 +141,27 @@
     </aside>
 </div>
 </body>
+{{--<script>$('#startBtn').click(function() {--}}
+{{--        // Send an Ajax request to the Laravel application--}}
+{{--        $.ajax({--}}
+{{--            url: 'api/endpoint',--}}
+{{--            type: 'GET',--}}
+{{--            success: function(response) {--}}
+{{--                // Handle the response and access the data in your Java application--}}
+{{--                // ...--}}
+{{--            }--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
+{{--<script defer>--}}
+{{--    $.ajax({--}}
+{{--        url: 'api/testing',--}}
+{{--        type: 'GET',--}}
+{{--        success: function(response) {--}}
+{{--            console.log(response)--}}
+{{--            // Handle the response and display the data--}}
+{{--            $('#defect-id').val(response.data);--}}
+{{--        }--}}
+{{--    });--}}
+{{--</script>--}}
 </html>

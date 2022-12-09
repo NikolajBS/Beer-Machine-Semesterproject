@@ -1,7 +1,5 @@
-window.onload = function () {
 
-
-    document.getElementById('startBtn').onclick = function () {
+    function test(){
         // let csrf = document.querySelector('meta[name="csrf-token"]').content;
         // let xhttp = new XMLHttpRequest();
         // xhttp.onreadystatechange = function () {
@@ -11,15 +9,23 @@ window.onload = function () {
         //         console.log(data);
         //     }
         // };
-        // xhttp.open("POST", "register", true);
+        // xhttp.open("GET", "api/endpoint", true);
         // xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
         // xhttp.setRequestHeader('Accept', 'application/json');
         // xhttp.setRequestHeader('Content-Type', 'application/json');
-        // xhttp.send(JSON.stringify({amount: 300, type: 0, speed: 200}));
-        console.log("yep");
-
+        // xhttp.send()
+        $('#startBtn').click(function() {
+            // Send an Ajax request to the Laravel application
+            $.ajax({
+                url: 'api/endpoint',
+                type: 'GET',
+                success: function(response) {
+                    console.log(response)
+                }
+            });
+        });
     }
-}
+
     const select = document.getElementById('product-type');
     var input_amount = document.getElementById('speed-id');
     select.onchange = function (){

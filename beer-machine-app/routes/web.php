@@ -30,6 +30,9 @@ Route::get('/test', function () {
 });
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
-Route::get('data',[ProductController::class,'retrieveData']);
 
+Route::post('test123',function (){
+    return view('home');
+});
+Route::get('mytest',[ProductController::class,'testing']);
 
