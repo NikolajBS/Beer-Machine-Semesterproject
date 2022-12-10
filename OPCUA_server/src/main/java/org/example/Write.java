@@ -13,10 +13,7 @@ package org.example;
 import java.util.List;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
-import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfig;
 import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfigBuilder;
-import org.eclipse.milo.opcua.sdk.client.api.identity.IdentityProvider;
-import org.eclipse.milo.opcua.sdk.client.api.identity.UsernameProvider;
 import org.eclipse.milo.opcua.stack.client.DiscoveryClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
@@ -54,26 +51,67 @@ public class Write {
 
         //datatype hvis float skal castes som (float)value
         //datatype hvis det er enten en boolean eller en int skal den IKKE CASTES!
+    }
 
-        //Speed
-        NodeId nodeSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
-        // client.writeValue(nodeSpeed, DataValue.valueOnly(new Variant((float)600.0)));
-
-        //Parameters
-        NodeId nodePara0 = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");
-        NodeId nodePara1  = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
-        NodeId nodePara2  = new NodeId(6, "::Program:Cube.Command.Parameter[2].Value");
-        // client.writeValue(nodePara0, DataValue.valueOnly(new Variant((float)10.0)));
-        //  client.writeValue(nodePara2, DataValue.valueOnly(new Variant((float)200.0)));
-
-
+    public void resetButton(){
         //Control
         NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        //client.writeValue(nodeControl, DataValue.valueOnly(new Variant(2)));
+        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(1)));
         NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        //client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    }
 
+    public void startButton(){
+        //Control
+        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(2)));
+        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    }
 
+    public void stopButton(){
+        //Control
+        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(3)));
+        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    }
+
+    public void abortButton(){
+        //Control
+        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(4)));
+        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    }
+
+    public void clearButton(){
+        //Control
+        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
+        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(5)));
+        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
+        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    }
+
+    public void changeSpeed(float speed){
+        //Speed
+        NodeId nodeSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
+        client.writeValue(nodeSpeed, DataValue.valueOnly(new Variant((float)speed)));
+    }
+
+    public void setBatchId(float batchId){
+        NodeId nodePara0 = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");
+        client.writeValue(nodePara0, DataValue.valueOnly(new Variant((float)batchId)));
+    }
+
+    public void setBeerId(float beerId){
+        NodeId nodePara1  = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
+        client.writeValue(nodePara1, DataValue.valueOnly(new Variant((float)beerId)));
+    }
+
+    public void setAmount(float amountBeer){
+        NodeId nodePara2  = new NodeId(6, "::Program:Cube.Command.Parameter[2].Value");
+        client.writeValue(nodePara2, DataValue.valueOnly(new Variant((float)amountBeer)));
     }
 
 
