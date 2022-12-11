@@ -1,52 +1,109 @@
 
-    function test(){
-        // let csrf = document.querySelector('meta[name="csrf-token"]').content;
-        // let xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function () {
-        //     if (this.readyState == 4 && this.status == 200) {
-        //
-        //         data = JSON.parse(this.responseText)
-        //         console.log(data);
-        //     }
-        // };
-        // xhttp.open("GET", "api/endpoint", true);
-        // xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);
-        // xhttp.setRequestHeader('Accept', 'application/json');
-        // xhttp.setRequestHeader('Content-Type', 'application/json');
-        // xhttp.send()
         $('#startBtn').click(function() {
-            // Send an Ajax request to the Laravel application
+            // let speed = document.getElementById('label-speed-id').value;
+            // let productID = document.getElementById('label-type-type').value;
+            // let productAmount = document.getElementById('label-amount-id').value;
+            var speed = $("#label-speed-id").val();
+            var productID = $("#label-type-id").val();
+            var productAmount = $("#label-amount-id").val();
+
             $.ajax({
-                url: 'api/endpoint',
-                type: 'GET',
-                success: function(response) {
-                    console.log(response)
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    CmdChange: 2,
+                    CmdChangeRequest:true,
+                    MachSpeed: speed,
+                    productID: productID,
+                    productAmount: productAmount
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
                 }
             });
         });
-    }
 
-    const select = document.getElementById('product-type');
-    var input_amount = document.getElementById('speed-id');
-    select.onchange = function (){
-    if(select.value==="0"){
-        input_amount.setAttribute("max",600);
-        input_amount.setAttribute("min",1);
-    }
-    if(select.value==="1"){
-        input_amount.setAttribute("max",300);
-        input_amount.setAttribute("min",1);
-    }if(select.value==="2"){
-        input_amount.setAttribute("max",150);
-            input_amount.setAttribute("min",1);
-    }if(select.value==="3"){
-        input_amount.setAttribute("max",200);
-        input_amount.setAttribute("min",1);
-    }if(select.value==="4"){
-        input_amount.setAttribute("max",100);
-        input_amount.setAttribute("min",1);
-    }if(select.value==="6"){
-        input_amount.setAttribute("max",125);
-        input_amount.setAttribute("min",1);
-    }
-}
+        $('#stopBtn').click(function() {
+            $.ajax({
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    CmdChange: 3,
+                    CmdChangeRequest:true
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
+                }
+            });
+        });
+
+        $('#resetBtn').click(function() {
+            $.ajax({
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    CmdChange: 1,
+                    CmdChangeRequest:true
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
+                }
+            });
+        });
+        $('#clearBtn').click(function() {
+            $.ajax({
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    CmdChange: 5,
+                    CmdChangeRequest:true
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
+                }
+            });
+        });
+        $('#abortBtn').click(function() {
+            $.ajax({
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    CmdChange: 4,
+                    CmdChangeRequest:true
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
+                }
+            });
+        });
+
+
+//     const select = document.getElementById('product-type');
+//     var input_amount = document.getElementById('speed-id');
+//     select.onchange = function (){
+//     if(select.value==="0"){
+//         input_amount.setAttribute("max",600);
+//         input_amount.setAttribute("min",1);
+//     }
+//     if(select.value==="1"){
+//         input_amount.setAttribute("max",300);
+//         input_amount.setAttribute("min",1);
+//     }if(select.value==="2"){
+//         input_amount.setAttribute("max",150);
+//             input_amount.setAttribute("min",1);
+//     }if(select.value==="3"){
+//         input_amount.setAttribute("max",200);
+//         input_amount.setAttribute("min",1);
+//     }if(select.value==="4"){
+//         input_amount.setAttribute("max",100);
+//         input_amount.setAttribute("min",1);
+//     }if(select.value==="6"){
+//         input_amount.setAttribute("max",125);
+//         input_amount.setAttribute("min",1);
+//     }
+// }

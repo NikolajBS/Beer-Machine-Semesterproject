@@ -6,9 +6,8 @@ use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 
 use App\Models\Batch;
-use App\Models\Inventory;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +22,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('home', [ProductController::class,'index'])->name('home');
-
+Route::get('home', function (){
+    $batch = Batch::all()->last();
+    return view('home',['batch'=>$batch]);
+})->name('home');
 Route::get('/test', function () {
     return new UserResource(Batch::find(1));
 });
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
 
-Route::post('test123',function (){
-    return view('home');
-});
-Route::get('mytest',[ProductController::class,'testing']);
+
 

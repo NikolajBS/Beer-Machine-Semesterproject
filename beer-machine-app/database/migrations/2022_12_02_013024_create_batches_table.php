@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('type');
             $table->integer('speed');
             $table->integer('amount');
+            $table->integer('producedAmount');
+            $table->integer('defectAmount');
+            $table->integer('acceptedAmount');
             $table->timestamps();
         });
     }

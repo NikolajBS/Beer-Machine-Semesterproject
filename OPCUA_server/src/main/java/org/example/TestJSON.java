@@ -1,59 +1,67 @@
 package org.example;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.HttpServer;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestJSON {
 
-    private static final String GET_URL ="http://127.0.0.1:8000/api/endpoint";
     private static final String POST_URL = "http://127.0.0.1:8000/api/posttest";
+    private static final String USER_AGENT = "Mozilla/5.0";
 
-    public static void sendGET() throws IOException {
-        URL obj = new URL(GET_URL);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+public static void server() throws IOException, InterruptedException {
+    HttpServer server = HttpServer.create(new InetSocketAddress(80), 0);
+    server.createContext("/data", (exchange -> {
+        // Get the button identifier from the request
+        String data = exchange.getRequestURI().getQuery();
+        Map<String, String> myData = queryToMap(data);
+        System.out.println(myData);
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
+        // Return the data as a JSON response
+        String json = new ObjectMapper().writeValueAsString(data);
+        exchange.sendResponseHeaders(200, json.length());
+        OutputStream os = exchange.getResponseBody();
 
-            JSONObject json = new JSONObject(response.toString());
-
-            String cmdChange = json.getString("CntrlCmd");
-            String cmdChangeRequest = json.getString("CmdChangeRequest");
-            System.out.println(cmdChange);
-            System.out.println(response.toString());
-        } else {
-            System.out.println("GET request did not work.");
+        os.write(json.getBytes());
+        os.close();
+    }));
+    server.start();
+}
+// fix:me so it doesnt create a new hashmap every time we send commands, but rather update current hashmap values
+    private static Map<String, String> queryToMap(String query) {
+        if(query == null) {
+            return null;
         }
-
+        Map<String, String> result = new HashMap<>();
+        for (String param : query.split("&")) {
+            String[] entry = param.split("=");
+            if (entry.length > 1) {
+                result.put(entry[0], entry[1]);
+            }else{
+                result.put(entry[0], "");
+            }
+        }
+        return result;
     }
-    public static void sendPOST(String type, float value, int id) throws IOException {
+
+    public static void sendPOST(String type, Object value, int id) throws IOException {
+
+
         URL obj = new URL(POST_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
-
+        con.setRequestProperty("User-Agent", USER_AGENT);
         // For POST only - START
         con.setDoOutput(true);
-        //OutputStream os = con.getOutputStream();
-        //String json = String.format("[test{\"type\":\"%s\",\"value\":\"%f\",\"id\":\"%d\"}]",type,value,id);
-        String data = "{\"type\": "+type+", \"value\": "+value+", \"value\":"+id+"}";
-        DataOutputStream os = new DataOutputStream(con.getOutputStream());
-        //String json = "type="+type+"&value="+value+"&id="+id;
+        OutputStream os = con.getOutputStream();
 
-        os.writeBytes(data);
+        String data = "type="+type+"&value="+value+"&id="+id;
+
+        os.write(data.getBytes());
         os.flush();
         os.close();
         // For POST only - END
@@ -79,11 +87,6 @@ public class TestJSON {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        // how to retrieve values from specific keys
-        while(true){
-            //sendPOST("test",3,2);
-            sendGET();
-            Thread.sleep(2000);
-        }
+    server();
     }
 }

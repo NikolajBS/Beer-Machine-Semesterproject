@@ -2,8 +2,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
+    <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script defer src={{asset("javascript.js")}}></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -11,14 +11,18 @@
     <img src="{{asset('images/banner.jpg')}}">
 </header>
 <div class="flex-container">
+
     <aside>
-        <button id="resetBtn" >Reset</button>
-        <button id="startBtn"onclick="test()" >Start</button>
+        <button id="resetBtn">Reset</button>
+        <button id="startBtn">Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
-        <button onclick="location.href='{{ route('submit') }}'">
+        <button id="editBtn" onclick="location.href='{{ route('submit') }}'">
             Edit</button>
+        <input id="label-type-id" value="{{$batch->type}}">
+        <input id="label-speed-id" value="{{$batch->speed}}">
+        <input id="label-amount-id" value="{{$batch->amount}}">
     </aside>
     <main class="flex-container-main">
         <article class="container-article">
@@ -41,6 +45,7 @@
             <div class="container-item">
                 <label>Yeast</label>
                 <img src="{{asset('images/container.jpg')}}">
+
             </div>
         </article>
         <article class="data-container">
@@ -48,7 +53,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input readonly id="temp-id">
+                            <input readonly id="temp-id" >
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -125,6 +130,7 @@
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
                         <input readonly  id="defect-id">
+
                     </div>
                     <div class="data-item">
                         <p>Defect products</p>
@@ -141,27 +147,4 @@
     </aside>
 </div>
 </body>
-{{--<script>$('#startBtn').click(function() {--}}
-{{--        // Send an Ajax request to the Laravel application--}}
-{{--        $.ajax({--}}
-{{--            url: 'api/endpoint',--}}
-{{--            type: 'GET',--}}
-{{--            success: function(response) {--}}
-{{--                // Handle the response and access the data in your Java application--}}
-{{--                // ...--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
-{{--<script defer>--}}
-{{--    $.ajax({--}}
-{{--        url: 'api/testing',--}}
-{{--        type: 'GET',--}}
-{{--        success: function(response) {--}}
-{{--            console.log(response)--}}
-{{--            // Handle the response and display the data--}}
-{{--            $('#defect-id').val(response.data);--}}
-{{--        }--}}
-{{--    });--}}
-{{--</script>--}}
 </html>
