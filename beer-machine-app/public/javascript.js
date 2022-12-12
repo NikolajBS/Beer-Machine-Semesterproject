@@ -12,10 +12,6 @@
                 type: "GET",
                 data: {
                     CmdChange: 2,
-                    CmdChangeRequest:true,
-                    MachSpeed: speed,
-                    productID: productID,
-                    productAmount: productAmount
                 },
                 success: function(data) {
                     // Print out the data
@@ -30,7 +26,6 @@
                 type: "GET",
                 data: {
                     CmdChange: 3,
-                    CmdChangeRequest:true
                 },
                 success: function(data) {
                     // Print out the data
@@ -59,7 +54,6 @@
                 type: "GET",
                 data: {
                     CmdChange: 5,
-                    CmdChangeRequest:true
                 },
                 success: function(data) {
                     // Print out the data
@@ -73,7 +67,6 @@
                 type: "GET",
                 data: {
                     CmdChange: 4,
-                    CmdChangeRequest:true
                 },
                 success: function(data) {
                     // Print out the data

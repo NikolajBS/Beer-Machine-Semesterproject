@@ -5,21 +5,21 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.*;
 import java.net.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TestJSON {
 
     private static final String POST_URL = "http://127.0.0.1:8000/api/posttest";
     private static final String USER_AGENT = "Mozilla/5.0";
 
-public static void server() throws IOException, InterruptedException {
-    HttpServer server = HttpServer.create(new InetSocketAddress(80), 0);
+    Write write;
+
+public void server() throws IOException, InterruptedException {
+    HttpServer server = HttpServer.create(new InetSocketAddress(800), 0);
+    write = new Write();
     server.createContext("/data", (exchange -> {
         // Get the button identifier from the request
         String data = exchange.getRequestURI().getQuery();
-        Map<String, String> myData = queryToMap(data);
-        System.out.println(myData);
+        write.sendCommand(splitToInt(data));
 
         // Return the data as a JSON response
         String json = new ObjectMapper().writeValueAsString(data);
@@ -32,20 +32,19 @@ public static void server() throws IOException, InterruptedException {
     server.start();
 }
 // fix:me so it doesnt create a new hashmap every time we send commands, but rather update current hashmap values
-    private static Map<String, String> queryToMap(String query) {
+    public int splitToInt(String query) {
         if(query == null) {
-            return null;
+            return 0;
         }
-        Map<String, String> result = new HashMap<>();
         for (String param : query.split("&")) {
             String[] entry = param.split("=");
             if (entry.length > 1) {
-                result.put(entry[0], entry[1]);
+                return Integer.parseInt(entry[1]);
             }else{
-                result.put(entry[0], "");
+                return 0;
             }
         }
-        return result;
+        return 0;
     }
 
     public static void sendPOST(String type, Object value, int id) throws IOException {
@@ -87,7 +86,10 @@ public static void server() throws IOException, InterruptedException {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-    server();
+    TestJSON json = new TestJSON();
+    json.server();
     sendPOST("temperature",200,1);
+
+
     }
 }
