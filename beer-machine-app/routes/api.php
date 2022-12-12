@@ -28,7 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('posttest',[APIController::class,'updateData']);
-Route::get('testing',[APIController::class,'resourceFunction']);
+Route::post('posttest',[ProductController::class,'updateData']);
+Route::get('testing',[ProductController::class,'resourceFunction']);
 
-Route::get('endpoint', [APIController::class,'startCmd']);
+Route::get('endpoint', [ProductController::class,'startCmd']);
+Route::get('collection/{batch}',[ProductController::class,'getEverything']);

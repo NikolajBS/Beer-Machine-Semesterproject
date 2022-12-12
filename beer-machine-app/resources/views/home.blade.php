@@ -55,6 +55,21 @@
                             <img src="{{asset('images/thermometer.jpg')}}">
                             <input readonly id="temp-id" >
                     </div>
+                    <script>setInterval(function (){
+                            $.ajax({
+                                url: "api/collection/"+{{$batch->id}},
+                                type: "GET",
+                                success: function(data) {
+                                    document.getElementById('temp-id').value=data['temp'].temperature;
+                                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
+                                    document.getElementById('defect-id').value=data['batch'].defectAmount;
+                                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
+                                    document.getElementById('humidity-id').value=data['humidity'].humidity;
+                                    document.getElementById('vibration-id').value=data['vibration'].vibration;
+                                }
+                            })
+                        },1000)</script>
+
                     <div class="data-item">
                         <p>Temperature</p>
                     </div>
