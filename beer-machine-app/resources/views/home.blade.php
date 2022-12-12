@@ -158,13 +158,20 @@
             url: "api/collection/"+{{$batch->id}},
             type: "GET",
             success: function(data) {
-                console.log(data)
-                document.getElementById('temp-id').value=data['temp'].temperature;
-                document.getElementById('bottled-id').value=data['batch'].producedAmount;
-                document.getElementById('defect-id').value=data['batch'].defectAmount;
-                document.getElementById('accept-id').value=data['batch'].acceptedAmount;
-                document.getElementById('humidity-id').value=data['humidity'].humidity;
-                document.getElementById('vibration-id').value=data['vibration'].vibration;
+                if(data['temp']!=null){
+                    document.getElementById('temp-id').value=data['temp'].temperature;
+                }
+                if(data['batch']!=null){
+                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
+                    document.getElementById('defect-id').value=data['batch'].defectAmount;
+                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
+                }
+                if(data['humidity']!=null){
+                    document.getElementById('humidity-id').value=data['humidity'].humidity;
+                }
+                if(data['vibration']!=null){
+                    document.getElementById('vibration-id').value=data['vibration'].vibration;
+                }
             }
         })
     },1000)</script>

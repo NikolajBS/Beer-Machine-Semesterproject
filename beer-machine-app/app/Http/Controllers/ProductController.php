@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Batch;
 use App\Models\Humidity;
-use App\Models\State;
 use App\Models\Temperature;
 use App\Models\Vibration;
 use Illuminate\Http\Request;
