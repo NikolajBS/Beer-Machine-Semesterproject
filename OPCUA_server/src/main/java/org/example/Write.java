@@ -13,7 +13,10 @@ package org.example;
 import java.util.List;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
+import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfig;
 import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfigBuilder;
+import org.eclipse.milo.opcua.sdk.client.api.identity.IdentityProvider;
+import org.eclipse.milo.opcua.sdk.client.api.identity.UsernameProvider;
 import org.eclipse.milo.opcua.stack.client.DiscoveryClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
@@ -24,95 +27,44 @@ import org.eclipse.milo.opcua.stack.core.util.EndpointUtil;
 
 public class Write {
 
-    static OpcUaClient client;
-
     public static void main(String[] args) {
-        try {
+        try 
+        {
             List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://127.0.0.1:4840").get();
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
-            //cfg.setIdentityProvider(getIdentityProvider()).build();
+            OpcUaClientConfig config;
+            for (int j = 0; j < endpoints.size(); j++) {
+                System.out.println("Endpoint "+ j + " is " + endpoints.get(j).getSecurityMode().name());
 
+            }
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
-                if (endpoints.get(i).getSecurityMode().name().equals("None")) {
+                if(endpoints.get(i).getSecurityMode().name().equals("None")){ //None or SignAndEncrypt
                     EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(i), "127.0.0.1", 4840);
                     cfg.setEndpoint(configPoint);
                     break;
                 }
             }
 
-            client = OpcUaClient.create(cfg.build());
+            config = cfg.setIdentityProvider(getIdentityProvider()).build();
+            OpcUaClient client = OpcUaClient.create(config);
             client.connect().get();
-        } catch (Throwable ex) {
-            //System.out.println("*****************************************");
+
+            /* myVariable endpoint */
+            //NodeId nodeId  = NodeId.parse("ns=2;i=1002);
+            NodeId nodeId  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
+            System.out.println(client.writeValue(nodeId, DataValue.valueOnly(new Variant((float)5.0))).get());
+
+        }
+        catch(Throwable ex)
+        {
             ex.printStackTrace();
         }
 
-        //datatype hvis float skal castes som (float)value
-        //datatype hvis det er enten en boolean eller en int skal den IKKE CASTES!
     }
-
-    public void resetButton(){
-        //Control
-        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(1)));
-        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
+    public static IdentityProvider getIdentityProvider() {
+        return new UsernameProvider("sdu", "1234");
     }
-
-    public void startButton(){
-        //Control
-        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(2)));
-        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
-    }
-
-    public void stopButton(){
-        //Control
-        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(3)));
-        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
-    }
-
-    public void abortButton(){
-        //Control
-        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(4)));
-        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
-    }
-
-    public void clearButton(){
-        //Control
-        NodeId nodeControl  = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
-        client.writeValue(nodeControl, DataValue.valueOnly(new Variant(5)));
-        NodeId nodeSend  = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
-        client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
-    }
-
-    public void changeSpeed(float speed){
-        //Speed
-        NodeId nodeSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
-        client.writeValue(nodeSpeed, DataValue.valueOnly(new Variant((float)speed)));
-    }
-
-    public void setBatchId(float batchId){
-        NodeId nodePara0 = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");
-        client.writeValue(nodePara0, DataValue.valueOnly(new Variant((float)batchId)));
-    }
-
-    public void setBeerId(float beerId){
-        NodeId nodePara1  = new NodeId(6, "::Program:Cube.Command.Parameter[1].Value");
-        client.writeValue(nodePara1, DataValue.valueOnly(new Variant((float)beerId)));
-    }
-
-    public void setAmount(float amountBeer){
-        NodeId nodePara2  = new NodeId(6, "::Program:Cube.Command.Parameter[2].Value");
-        client.writeValue(nodePara2, DataValue.valueOnly(new Variant((float)amountBeer)));
-    }
-
 
 }

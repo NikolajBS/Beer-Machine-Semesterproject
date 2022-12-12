@@ -1,87 +1,93 @@
 package org.example;
 
-import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.HttpServer;
+
+import java.io.*;
+import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestJSON {
 
-    private static final String GET_URL = "http://127.0.0.1:8000/data";
+    private static final String POST_URL = "http://127.0.0.1:8000/api/posttest";
+    private static final String USER_AGENT = "Mozilla/5.0";
 
-    private JSONObject getAPIData() {
+public static void server() throws IOException, InterruptedException {
+    HttpServer server = HttpServer.create(new InetSocketAddress(80), 0);
+    server.createContext("/data", (exchange -> {
+        // Get the button identifier from the request
+        String data = exchange.getRequestURI().getQuery();
+        Map<String, String> myData = queryToMap(data);
+        System.out.println(myData);
 
-        URL obj;
-        HttpURLConnection con = null;
-        int responseCode = 0;
-        JSONObject json = null;
-        try {
-            obj = new URL(GET_URL);
-            con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-            responseCode = con.getResponseCode();
-            // response code 200 is successful connection.
-            System.out.println("GET Response Code :: " + responseCode);
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Return the data as a JSON response
+        String json = new ObjectMapper().writeValueAsString(data);
+        exchange.sendResponseHeaders(200, json.length());
+        OutputStream os = exchange.getResponseBody();
+
+        os.write(json.getBytes());
+        os.close();
+    }));
+    server.start();
+}
+// fix:me so it doesnt create a new hashmap every time we send commands, but rather update current hashmap values
+    private static Map<String, String> queryToMap(String query) {
+        if(query == null) {
+            return null;
         }
-
-        try {
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-
-                while ((inputLine = reader.readLine()) != null) {
-                    response.append(inputLine);
-                    System.out.println(response);
-                }
-                reader.close();
-                json = new JSONObject(String.valueOf(response));
-
-            } else {
-                System.out.println("GET failed");
+        Map<String, String> result = new HashMap<>();
+        for (String param : query.split("&")) {
+            String[] entry = param.split("=");
+            if (entry.length > 1) {
+                result.put(entry[0], entry[1]);
+            }else{
+                result.put(entry[0], "");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return json;
+        return result;
     }
 
-    private void sendData() {
-        String POST_URL = "http://127.0.0.1:8000/api/getdata";
-        String json = "{\"test\": 1}";
-        URL obj = null;
-        HttpURLConnection con = null;
-        int responseCode = 0;
-        try {
-            obj = new URL(POST_URL);
-            con = (HttpURLConnection) obj.openConnection();
-            con.setRequestProperty("Content-Type", "application/json;");
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            OutputStream output = con.getOutputStream();
-            output.write(json.getBytes());
-            output.close();
-            responseCode = con.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void sendPOST(String type, Object value, int id) throws IOException {
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            System.out.println("POST SUCCESS");
+
+        URL obj = new URL(POST_URL);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        // For POST only - START
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+
+        String data = "type="+type+"&value="+value+"&id="+id;
+
+        os.write(data.getBytes());
+        os.flush();
+        os.close();
+        // For POST only - END
+
+        int responseCode = con.getResponseCode();
+        System.out.println("POST Response Code :: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) { //success
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+            System.out.println(response.toString());
         } else {
-            System.out.println("POST failed " + responseCode);
+            System.out.println("POST request did not work.");
         }
     }
 
-    public static void main(String[] args) {
-        //new TestJSON().getAPIData();
-        new TestJSON().sendData();
-
+    public static void main(String[] args) throws InterruptedException, IOException {
+    server();
+    sendPOST("temperature",200,1);
     }
 }

@@ -2,23 +2,26 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
+    <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script defer src={{asset("javascript.js")}}></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <header>
     <img src="{{asset('images/banner.jpg')}}">
 </header>
 <div class="flex-container">
+
     <aside>
-        <button id="resetBtn" >Reset</button>
-        <button id="startBtn" onclick="start()">Start</button>
+        <button id="resetBtn">Reset</button>
+        <button id="startBtn">Start</button>
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
-        <button onclick="location.href='{{ route('change') }}'">
+        <button id="editBtn" onclick="location.href='{{ route('submit') }}'">
             Edit</button>
-
-
+        <button id="createPdf">Create PDF</button>
     </aside>
     <main class="flex-container-main">
         <article class="container-article">
@@ -41,6 +44,7 @@
             <div class="container-item">
                 <label>Yeast</label>
                 <img src="{{asset('images/container.jpg')}}">
+
             </div>
         </article>
         <article class="data-container">
@@ -48,7 +52,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input id="temp-id">
+                            <input readonly id="temp-id" >
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -57,7 +61,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input id="batch-id">
+                        <input type="text" readonly id="batch-id" value="{{$batch->id}}">
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -66,7 +70,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/bottle.jpg')}}">
-                        <input id="bottled-id">
+                        <input readonly  id="bottled-id">
                     </div>
                     <div class="data-item">
                         <p>Bottles</p>
@@ -77,7 +81,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humid.jpg')}}">
-                        <input id="humidity-id">
+                        <input readonly  id="humidity-id">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -85,8 +89,8 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/handle.jpg')}}">
-                        <input id="amount-id">
+                        <img src="{{asset('images/handle.jpg')}}" >
+                        <input readonly id="amount-id" value="{{$batch->amount}}">
                     </div>
                     <div class="data-item">
                         <p>Amount to produce</p>
@@ -95,7 +99,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.jpg')}}">
-                        <input id="accept-id">
+                        <input readonly  id="accept-id">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -106,7 +110,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.jpg')}}">
-                        <input id="vibration-id">
+                        <input readonly id="vibration-id">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -115,7 +119,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/ppm.jpg')}}">
-                        <input id="ppm-id">
+                        <input readonly  id="ppm-id" value="{{$batch->speed}}">
                     </div>
                     <div class="data-item">
                         <p>Products per minute</p>
@@ -124,7 +128,8 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
-                        <input id="defect-id">
+                        <input readonly  id="defect-id">
+
                     </div>
                     <div class="data-item">
                         <p>Defect products</p>
@@ -141,4 +146,26 @@
     </aside>
 </div>
 </body>
+{{--TO DO:--}}
+{{--should the script first be called when we press start -> if so fix it --}}
+{{--data sent to java should be interpreted and written to UA EXPERT--}}
+{{--When we click create pdf button, a pdf should be created, check javascript.js for inspiration--}}
+{{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
+, and then when full again, send start values.--}}
+{{--report--}}
+<script>setInterval(function (){
+        $.ajax({
+            url: "api/collection/"+{{$batch->id}},
+            type: "GET",
+            success: function(data) {
+                console.log(data)
+                document.getElementById('temp-id').value=data['temp'].temperature;
+                document.getElementById('bottled-id').value=data['batch'].producedAmount;
+                document.getElementById('defect-id').value=data['batch'].defectAmount;
+                document.getElementById('accept-id').value=data['batch'].acceptedAmount;
+                document.getElementById('humidity-id').value=data['humidity'].humidity;
+                document.getElementById('vibration-id').value=data['vibration'].vibration;
+            }
+        })
+    },1000)</script>
 </html>
