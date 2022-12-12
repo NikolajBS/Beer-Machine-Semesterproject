@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BatchResource;
-use App\Http\Resources\UserResource;
 use App\Models\Batch;
 use App\Models\Humidity;
 use App\Models\State;
@@ -44,20 +42,34 @@ class ProductController extends Controller
         $type = \request('type');
         $value = \request('value');
         $id = \request('id');
-
+        $batch = Batch::find($id);
         switch ($type){
             case "producedAmount":
-                //
+                $batch->producedAmount = $value;
+                $batch->acceptedAmount = $batch->producedAmount-$batch->defectAmount;
+                $batch->save();
+                break;
             case "defective":
-                //
-            case "speed":
-                //
+                $batch->defectAmount=$value;
+                $batch->save();
+                break;
             case "temperature":
-                //
+                $temp = new Temperature();
+                $temp->temperature = $value;
+                $temp->batch_id = $id;
+                $temp->save();
+                break;
             case "humidity":
-                //
+                $humidity = new Humidity();
+                $humidity->humidity = $value;
+                $humidity->batch_id = $id;
+                $humidity->save();
+                break;
             case "vibration":
                 $vibration = new Vibration();
+                $vibration->vibration = $value;
+                $vibration->batch_id = $id;
+                $vibration->save();
         }
     }
     function getEverything(Batch $batch){

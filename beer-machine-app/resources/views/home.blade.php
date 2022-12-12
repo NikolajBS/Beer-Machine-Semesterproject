@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script defer src={{asset("javascript.js")}}></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -20,9 +21,7 @@
         <button id="clearBtn">Clear</button>
         <button id="editBtn" onclick="location.href='{{ route('submit') }}'">
             Edit</button>
-        <input id="label-type-id" value="{{$batch->type}}">
-        <input id="label-speed-id" value="{{$batch->speed}}">
-        <input id="label-amount-id" value="{{$batch->amount}}">
+        <button id="createPdf">Create PDF</button>
     </aside>
     <main class="flex-container-main">
         <article class="container-article">
@@ -55,21 +54,6 @@
                             <img src="{{asset('images/thermometer.jpg')}}">
                             <input readonly id="temp-id" >
                     </div>
-                    <script>setInterval(function (){
-                            $.ajax({
-                                url: "api/collection/"+{{$batch->id}},
-                                type: "GET",
-                                success: function(data) {
-                                    document.getElementById('temp-id').value=data['temp'].temperature;
-                                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
-                                    document.getElementById('defect-id').value=data['batch'].defectAmount;
-                                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
-                                    document.getElementById('humidity-id').value=data['humidity'].humidity;
-                                    document.getElementById('vibration-id').value=data['vibration'].vibration;
-                                }
-                            })
-                        },1000)</script>
-
                     <div class="data-item">
                         <p>Temperature</p>
                     </div>
@@ -77,7 +61,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input type="text" readonly id="batch-id" >
+                        <input type="text" readonly id="batch-id" value="{{$batch->id}}">
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -106,7 +90,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/handle.jpg')}}" >
-                        <input readonly id="amount-id">
+                        <input readonly id="amount-id" value="{{$batch->amount}}">
                     </div>
                     <div class="data-item">
                         <p>Amount to produce</p>
@@ -135,7 +119,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/ppm.jpg')}}">
-                        <input readonly  id="ppm-id">
+                        <input readonly  id="ppm-id" value="{{$batch->speed}}">
                     </div>
                     <div class="data-item">
                         <p>Products per minute</p>
@@ -162,4 +146,26 @@
     </aside>
 </div>
 </body>
+{{--TO DO:--}}
+{{--should the script first be called when we press start -> if so fix it --}}
+{{--data sent to java should be interpreted and written to UA EXPERT--}}
+{{--When we click create pdf button, a pdf should be created, check javascript.js for inspiration--}}
+{{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
+, and then when full again, send start values.--}}
+{{--report--}}
+<script>setInterval(function (){
+        $.ajax({
+            url: "api/collection/"+{{$batch->id}},
+            type: "GET",
+            success: function(data) {
+                console.log(data)
+                document.getElementById('temp-id').value=data['temp'].temperature;
+                document.getElementById('bottled-id').value=data['batch'].producedAmount;
+                document.getElementById('defect-id').value=data['batch'].defectAmount;
+                document.getElementById('accept-id').value=data['batch'].acceptedAmount;
+                document.getElementById('humidity-id').value=data['humidity'].humidity;
+                document.getElementById('vibration-id').value=data['vibration'].vibration;
+            }
+        })
+    },1000)</script>
 </html>
