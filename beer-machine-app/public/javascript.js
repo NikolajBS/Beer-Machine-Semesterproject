@@ -1,21 +1,31 @@
 
         $('#startBtn').click(function() {
-            // let speed = document.getElementById('label-speed-id').value;
-            // let productID = document.getElementById('label-type-type').value;
-            // let productAmount = document.getElementById('label-amount-id').value;
-            var speed = $("#label-speed-id").val();
-            var productID = $("#label-type-id").val();
-            var productAmount = $("#label-amount-id").val();
-
             $.ajax({
                 url: "http://127.0.0.1:80/data",
                 type: "GET",
                 data: {
-                    CmdChange: 2,
-                    CmdChangeRequest:true,
-                    MachSpeed: speed,
-                    productID: productID,
-                    productAmount: productAmount
+                    CmdChange: 2
+                },
+                success: function(data) {
+                    // Print out the data
+                    console.log(data);
+                }
+            });
+        });
+        $('#submitBtn').click(function() {
+            let batchId = document.getElementById('batch-id').value;
+            let productType = document.getElementById('product-type').value;
+            let speedId = document.getElementById('speed-id').value;
+            let amountId = document.getElementById('amount-id').value;
+            $.ajax({
+                url: "http://127.0.0.1:80/data",
+                type: "GET",
+                data: {
+                    id: batchId,
+                    type: productType,
+                    speed: speedId,
+                    amount: amountId
+
                 },
                 success: function(data) {
                     // Print out the data
@@ -29,8 +39,7 @@
                 url: "http://127.0.0.1:80/data",
                 type: "GET",
                 data: {
-                    CmdChange: 3,
-                    CmdChangeRequest:true
+                    CmdChange: 3
                 },
                 success: function(data) {
                     // Print out the data
@@ -44,8 +53,7 @@
                 url: "http://127.0.0.1:80/data",
                 type: "GET",
                 data: {
-                    CmdChange: 1,
-                    CmdChangeRequest:true
+                    CmdChange: 1
                 },
                 success: function(data) {
                     // Print out the data
@@ -58,8 +66,7 @@
                 url: "http://127.0.0.1:80/data",
                 type: "GET",
                 data: {
-                    CmdChange: 5,
-                    CmdChangeRequest:true
+                    CmdChange: 5
                 },
                 success: function(data) {
                     // Print out the data
@@ -72,8 +79,7 @@
                 url: "http://127.0.0.1:80/data",
                 type: "GET",
                 data: {
-                    CmdChange: 4,
-                    CmdChangeRequest:true
+                    CmdChange: 4
                 },
                 success: function(data) {
                     // Print out the data

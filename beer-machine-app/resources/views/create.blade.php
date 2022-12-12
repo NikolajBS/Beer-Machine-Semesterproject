@@ -9,6 +9,8 @@
         <div >
             <form action="{{route('store')}}" method="post">
                 @csrf
+                <label>batch ID</label>
+                <input id="batch-id" min="0" max="65535">
                 <label>Type</label>
                 <select id="product-type" name="type">
                     <option selected="selected" value="0">Pilsner</option>
@@ -20,9 +22,9 @@
                 </select>
                 <label>Speed</label>
                 <input type="number" id="speed-id" name="speed" max="600" min="1">
-                <label>Amount</label>
+                <label for="amount-id">Amount</label>
                 <input type="number" id="amount-id" name="amount" max="65535" min="1">
-                <button type="submit">Submit</button>
+                <button id="submitBtn" type="submit">Submit</button>
             </form>
         </div>
     </body>
