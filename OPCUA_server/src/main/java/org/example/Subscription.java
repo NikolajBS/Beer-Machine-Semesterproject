@@ -49,8 +49,6 @@ public class Subscription {
             nodeCreation(client,"::Program:Cube.Admin.ProdProcessedCount");
             //defect amount
             nodeCreation(client,"::Program:Cube.Admin.ProdDefectiveCount");
-            //delete this
-            nodeCreation(client,"::Program:Cube.Command.MachSpeed");
             //temperature
             nodeCreation(client,"::Program:Cube.Status.Parameter[3].Value");
             //humidity
@@ -80,7 +78,6 @@ public class Subscription {
             switch (itemName) {
                 case "::Program:Cube.Admin.ProdProcessedCount" -> TestJSON.sendPOST("producedAmount", value.getValue().getValue(), 1);
                 case "::Program:Cube.Admin.ProdDefectiveCount" -> TestJSON.sendPOST("defective", value.getValue().getValue(), 1);
-                case "::Program:Cube.Command.MachSpeed" -> TestJSON.sendPOST("speed", (Float) value.getValue().getValue(), 1);
                 case "::Program:Cube.Status.Parameter[3].Value" -> TestJSON.sendPOST("temperature", value.getValue().getValue(), 1);
                 case "::Program:Cube.Status.Parameter[2].Value" -> TestJSON.sendPOST("humidity", value.getValue().getValue(), 1);
                 case "::Program:Cube.Status.Parameter[4].Value" -> TestJSON.sendPOST("vibration", value.getValue().getValue(), 1);

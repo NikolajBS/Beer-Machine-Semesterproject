@@ -88,6 +88,6 @@ public static void server() throws IOException, InterruptedException {
 
     public static void main(String[] args) throws InterruptedException, IOException {
     server();
-    sendPOST("test",200,200);
+    sendPOST("temperature",200,1);
     }
 }
