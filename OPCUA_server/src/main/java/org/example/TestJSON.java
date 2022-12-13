@@ -2,9 +2,11 @@ package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +16,20 @@ public class TestJSON {
     private static final String USER_AGENT = "Mozilla/5.0";
 
 public static void server() throws IOException, InterruptedException {
-    HttpServer server = HttpServer.create(new InetSocketAddress(80), 0);
+    Write write = Write.getInstance();
+    HttpServer server = HttpServer.create(new InetSocketAddress(3001), 0);
     server.createContext("/data", (exchange -> {
         // Get the button identifier from the request
         String data = exchange.getRequestURI().getQuery();
-        Map<String, String> myData = queryToMap(data);
-        System.out.println(myData);
+
+        //System.out.println(data);
+        float[] arr = queryToMap(data);
+        System.out.println(Arrays.toString(arr));
+        if (arr.length> 2) {
+            write.beerParameters(arr[0], arr[1], arr[2], arr[3]);
+        } else {
+            write.sendCommand((int) arr[0]);
+        }
 
         // Return the data as a JSON response
         String json = new ObjectMapper().writeValueAsString(data);
@@ -31,21 +41,16 @@ public static void server() throws IOException, InterruptedException {
     }));
     server.start();
 }
-// fix:me so it doesnt create a new hashmap every time we send commands, but rather update current hashmap values
-    private static Map<String, String> queryToMap(String query) {
-        if(query == null) {
-            return null;
+
+    private static float[] queryToMap(String query) {
+
+        float[] myArr;
+        String[] test = query.split("&");
+        myArr = new float[test.length];
+        for(int i=0;i<test.length;i++){
+            myArr[i] = Float.parseFloat(test[i].split("=")[1]);
         }
-        Map<String, String> result = new HashMap<>();
-        for (String param : query.split("&")) {
-            String[] entry = param.split("=");
-            if (entry.length > 1) {
-                result.put(entry[0], entry[1]);
-            }else{
-                result.put(entry[0], "");
-            }
-        }
-        return result;
+        return myArr;
     }
 
     public static void sendPOST(String type, Object value, int id) throws IOException {
@@ -88,6 +93,6 @@ public static void server() throws IOException, InterruptedException {
 
     public static void main(String[] args) throws InterruptedException, IOException {
     server();
-    sendPOST("temperature",200,1);
+    //sendPOST("temperature",200,1);
     }
 }

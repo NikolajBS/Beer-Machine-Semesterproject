@@ -140,7 +140,7 @@
     </main>
     <aside>
         <div class="main-container">
-            <div id="myBar"  class="main-fill"></div>
+            <div id="myBar"></div>
         </div>
         <img src="{{asset('images/main.jpg')}}">
     </aside>
