@@ -1,6 +1,6 @@
 
         $('#startBtn').click(function() {
-            maintenanceVal();
+            //maintenanceVal();
             $.ajax({
                 url: "http://127.0.0.1:3001/data",
                 type: "GET",
@@ -34,40 +34,41 @@
                 }
             });
         });
-        let currentHeight=100;
-        function maintenanceVal (){
-            // when stop is clicked we cancel the interval call.
-            document.getElementById('stopBtn').onclick = function (){
-              clearInterval(start);
-            };
-            const start = setInterval(function () {
-                currentHeight -= 20;
-                document.getElementById('myBar').style.height = currentHeight.toString() + "%";
-                // if true, stop production
-                if (currentHeight <= 20) {
-                    clearInterval(start);
-                    setTimeout(function (){
-                        alert("Machine needs repairing");
-                    })
-                    mainentenancePause();
-                    let refill = setInterval(function (){
-                        currentHeight += 20;
-                        document.getElementById('myBar').style.height = currentHeight.toString() + "%";
-                        // if true, start again
-                        if(currentHeight>=100){
-                            clearInterval(refill);
-                            setTimeout(function (){
-                                alert("Click to begin production again")
-                            })
-                            // send start cmd to Java
-                            mainentenanceStart();
-                            // recursive call
-                            maintenanceVal();
-                        }
-                    },1000);
-                }
-            }, 1000);
-        }
+        // let currentHeight=100;
+        // function maintenanceVal (){
+        //     // when stop is clicked we cancel the interval call.
+        //     document.getElementById('stopBtn').onclick = function (){
+        //       clearInterval(start);
+        //
+        //     };
+        //     const start = setInterval(function () {
+        //         currentHeight -= 2;
+        //         document.getElementById('myBar').style.height = currentHeight.toString() + "%";
+        //         // if true, stop production
+        //         if (currentHeight <= 20) {
+        //             clearInterval(start);
+        //             setTimeout(function (){
+        //                 alert("Machine needs repairing");
+        //             })
+        //             mainentenancePause();
+        //             let refill = setInterval(function (){
+        //                 currentHeight += 2;
+        //                 document.getElementById('myBar').style.height = currentHeight.toString() + "%";
+        //                 // if true, start again
+        //                 if(currentHeight>=100){
+        //                     clearInterval(refill);
+        //                     setTimeout(function (){
+        //                         alert("Click to begin production again")
+        //                     })
+        //                     // send start cmd to Java
+        //                     mainentenanceStart();
+        //                     // recursive call
+        //                     maintenanceVal();
+        //                 }
+        //             },1000);
+        //         }
+        //     }, 1000);
+        // }
 
         function mainentenanceStart(){
             $.ajax({
@@ -148,28 +149,3 @@
             });
         });
 
-
-//     const select = document.getElementById('product-type');
-//     var input_amount = document.getElementById('speed-id');
-//     select.onchange = function (){
-//     if(select.value==="0"){
-//         input_amount.setAttribute("max",600);
-//         input_amount.setAttribute("min",1);
-//     }
-//     if(select.value==="1"){
-//         input_amount.setAttribute("max",300);
-//         input_amount.setAttribute("min",1);
-//     }if(select.value==="2"){
-//         input_amount.setAttribute("max",150);
-//             input_amount.setAttribute("min",1);
-//     }if(select.value==="3"){
-//         input_amount.setAttribute("max",200);
-//         input_amount.setAttribute("min",1);
-//     }if(select.value==="4"){
-//         input_amount.setAttribute("max",100);
-//         input_amount.setAttribute("min",1);
-//     }if(select.value==="6"){
-//         input_amount.setAttribute("max",125);
-//         input_amount.setAttribute("min",1);
-//     }
-// }

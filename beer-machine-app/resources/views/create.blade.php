@@ -2,7 +2,9 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/create.css")}}">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script defer src={{asset("javascript.js")}}></script>
+    <script defer src={{asset("js/cmds.js")}}></script>
+    <script defer src={{asset("js/create.js")}}></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
     <body id="temp-container">
@@ -10,7 +12,7 @@
             <form action="{{route('store')}}" method="post">
                 @csrf
                 <label>batch ID</label>
-                <input id="batch-id" min="0" max="65535">
+                <input name="batch" id="batch-id" min="0" max="65535">
                 <label>Type</label>
                 <select id="product-type" name="type">
                     <option selected="selected" value="0">Pilsner</option>

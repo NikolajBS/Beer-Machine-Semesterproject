@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-    <script defer src={{asset("javascript.js")}}></script>
+    <script defer src={{asset("js/cmds.js")}}></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -147,9 +146,11 @@
 </div>
 </body>
 {{--TO DO:--}}
-{{--should the script first be called when we press start -> if so fix it --}}
-{{--data sent to java should be interpreted and written to UA EXPERT--}}
-{{--When we click create pdf button, a pdf should be created, check javascript.js for inspiration--}}
+{{--read batch id from ua expert, and send in subscription.--}}
+{{--modify migrations to fit new batch id from create view--}}
+{{--batch id? from create view -> should we manually insert batch id.--}}
+{{--GET request in AJAX, should be post but it doesnt work?? mby ask AI--}}
+{{--When we click create pdf button, a pdf should be created--}}
 {{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
 , and then when full again, send start values.--}}
 {{--report--}}

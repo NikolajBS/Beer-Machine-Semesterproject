@@ -22,9 +22,11 @@ class ProductController extends Controller
         //validation
         $request->validate(['type'=>'required|between:0,5',
             'speed'=>'required|min:1|numeric|',
-            'amount'=>'required|min:1|max:65535|numeric']);
+            'amount'=>'required|min:1|max:65535|numeric',
+            'batch'=>'required|min:0|max:65535|numeric']);
 
         $batch = new Batch();
+        $batch->batch = request('batch');
         $batch->type = request('type');
         $batch->amount = request('amount');
         $batch->speed = request('speed');
@@ -41,7 +43,8 @@ class ProductController extends Controller
         $type = \request('type');
         $value = \request('value');
         $id = \request('id');
-        $batch = Batch::find($id);
+        $batch = Batch::where(['batch'=>$id])->first();
+
         switch ($type){
             case "producedAmount":
                 $batch->producedAmount = $value;
@@ -55,21 +58,24 @@ class ProductController extends Controller
             case "temperature":
                 $temp = new Temperature();
                 $temp->temperature = $value;
-                $temp->batch_id = $id;
+                $temp->batch_id = $batch->id;
                 $temp->save();
                 break;
             case "humidity":
                 $humidity = new Humidity();
                 $humidity->humidity = $value;
-                $humidity->batch_id = $id;
+                $humidity->batch_id = $batch->id;
                 $humidity->save();
                 break;
             case "vibration":
                 $vibration = new Vibration();
                 $vibration->vibration = $value;
-                $vibration->batch_id = $id;
+                $vibration->batch_id = $batch->id;
                 $vibration->save();
+
+
         }
+        return response()->json([\request()->all()]);
     }
     function getEverything(Batch $batch){
 
