@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TemperatureResource;
 use App\Models\Batch;
 use App\Models\Humidity;
 use App\Models\Temperature;
@@ -42,32 +43,32 @@ class ProductController extends Controller
     function updateData(){
         $type = \request('type');
         $value = \request('value');
-        $id = \request('id');
-        $batch = Batch::where(['batch'=>$id])->first();
+
+        $batch = Batch::latest()->first();
 
         switch ($type){
-            case "producedAmount":
+            case "::Program:Cube.Admin.ProdProcessedCount":
                 $batch->producedAmount = $value;
                 $batch->acceptedAmount = $batch->producedAmount-$batch->defectAmount;
                 $batch->save();
                 break;
-            case "defective":
+            case "::Program:Cube.Admin.ProdDefectiveCount":
                 $batch->defectAmount=$value;
                 $batch->save();
                 break;
-            case "temperature":
+            case "::Program:Cube.Status.Parameter[3].Value":
                 $temp = new Temperature();
                 $temp->temperature = $value;
                 $temp->batch_id = $batch->id;
                 $temp->save();
                 break;
-            case "humidity":
+            case "::Program:Cube.Status.Parameter[2].Value":
                 $humidity = new Humidity();
                 $humidity->humidity = $value;
                 $humidity->batch_id = $batch->id;
                 $humidity->save();
                 break;
-            case "vibration":
+            case "::Program:Cube.Status.Parameter[4].Value":
                 $vibration = new Vibration();
                 $vibration->vibration = $value;
                 $vibration->batch_id = $batch->id;

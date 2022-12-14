@@ -24,28 +24,27 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Subscription {
+    static OpcUaClient client;
 
     public static void main(String[] args) {
         try
         {
-
             List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://127.0.0.1:4840").get();
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
 
-
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
-            for (int i = 0; i < endpoints.size(); i++) {
-                if(endpoints.get(i).getSecurityMode().name().equals("None")){
-                    EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(i), "127.0.0.1", 4840);
+            for (EndpointDescription endpoint : endpoints) {
+                if (endpoint.getSecurityMode().name().equals("None")) {
+                    EndpointDescription configPoint = EndpointUtil.updateUrl(endpoint, "127.0.0.1", 4840);
                     cfg.setEndpoint(configPoint);
                     break;
                 }
             }
-            OpcUaClient client = OpcUaClient.create(cfg.build());
+            client = OpcUaClient.create(cfg.build());
             client.connect().get();
 
-            //total amount
+            //current amount
             nodeCreation(client,"::Program:Cube.Admin.ProdProcessedCount");
             //defect amount
             nodeCreation(client,"::Program:Cube.Admin.ProdDefectiveCount");
@@ -55,7 +54,6 @@ public class Subscription {
             nodeCreation(client,"::Program:Cube.Status.Parameter[2].Value");
             // vibration
             nodeCreation(client,"::Program:Cube.Status.Parameter[4].Value");
-            //batch id
 
             // let the example run forever
             while(true)
@@ -66,26 +64,19 @@ public class Subscription {
             e.printStackTrace();
         }
     }
+
     // remake this method, so that it redirects the values and POSTs to our website.
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
 
-        // read  to get batch id
-        // System.out.println("subscription value received: item="+ item.getReadValueId().getNodeId().getIdentifier() + ", value=" + value.getValue().getValue());
-//
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
-        System.out.println(itemName);
         try {
-            switch (itemName) {
-                case "::Program:Cube.Admin.ProdProcessedCount" -> TestJSON.sendPOST("producedAmount", value.getValue().getValue(), 1);
-                case "::Program:Cube.Admin.ProdDefectiveCount" -> TestJSON.sendPOST("defective", value.getValue().getValue(), 1);
-                case "::Program:Cube.Status.Parameter[3].Value" -> TestJSON.sendPOST("temperature", value.getValue().getValue(), 1);
-                case "::Program:Cube.Status.Parameter[2].Value" -> TestJSON.sendPOST("humidity", value.getValue().getValue(), 1);
-                case "::Program:Cube.Status.Parameter[4].Value" -> TestJSON.sendPOST("vibration", value.getValue().getValue(), 1);
-            }
-        }catch (IOException e){
+            Server.sendPOST(itemName, value.getValue().getValue());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
     private static void nodeCreation(OpcUaClient client, String identifier) throws ExecutionException, InterruptedException {
         NodeId humidity  = new NodeId(6, identifier);
         ReadValueId read = new ReadValueId(humidity, AttributeId.Value.uid(), null, null);

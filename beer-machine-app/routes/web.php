@@ -26,9 +26,7 @@ Route::get('home', function (){
     $batch = Batch::all()->last();
     return view('home',['batch'=>$batch]);
 })->name('home');
-Route::get('/test', function () {
-    return new UserResource(Batch::find(1));
-});
+
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
 

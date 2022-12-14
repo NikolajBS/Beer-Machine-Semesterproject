@@ -51,7 +51,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input readonly id="temp-id" >
+                            <input readonly id="temp-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -60,7 +60,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input type="text" readonly id="batch-id" value="{{$batch->id}}">
+                        <input type="text" readonly id="batch-id" value="{{$batch->batch}}">
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -69,7 +69,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/bottle.jpg')}}">
-                        <input readonly  id="bottled-id">
+                        <input readonly  id="bottled-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Bottles</p>
@@ -80,7 +80,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humid.jpg')}}">
-                        <input readonly  id="humidity-id">
+                        <input readonly  id="humidity-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -98,7 +98,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.jpg')}}">
-                        <input readonly  id="accept-id">
+                        <input readonly  id="accept-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -109,7 +109,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.jpg')}}">
-                        <input readonly id="vibration-id">
+                        <input readonly id="vibration-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -127,7 +127,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
-                        <input readonly  id="defect-id">
+                        <input readonly  id="defect-id" value="0">
 
                     </div>
                     <div class="data-item">
@@ -153,8 +153,10 @@
 {{--When we click create pdf button, a pdf should be created--}}
 {{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
 , and then when full again, send start values.--}}
-{{--report--}}
+
+
 <script>setInterval(function (){
+
         $.ajax({
             url: "api/collection/"+{{$batch->id}},
             type: "GET",
@@ -175,5 +177,7 @@
                 }
             }
         })
-    },1000)</script>
+    },1000)
+</script>
+
 </html>
