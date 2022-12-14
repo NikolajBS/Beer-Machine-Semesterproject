@@ -43,7 +43,9 @@ public static void server() throws IOException {
                 // do something with request body
 
                 String response = "This is the response to the POST request";
+                exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
                 exchange.sendResponseHeaders(200, response.getBytes().length);
+
                 OutputStream responseBody = exchange.getResponseBody();
                 responseBody.write(response.getBytes());
                 responseBody.close();

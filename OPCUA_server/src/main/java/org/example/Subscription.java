@@ -69,6 +69,9 @@ public class Subscription {
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
 
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
+        if((int)value.getValue().getValue() == 0){
+            return;
+        }
         try {
             Server.sendPOST(itemName, value.getValue().getValue());
         } catch (IOException e) {
