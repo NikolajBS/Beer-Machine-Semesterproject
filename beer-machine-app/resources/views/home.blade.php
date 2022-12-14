@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{asset("css/main.css")}}">
     <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-    <script defer src={{asset("javascript.js")}}></script>
+    <script defer src={{asset("js/cmds.js")}}></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -52,7 +51,7 @@
                 <div class="test">
                     <div class="data-item">
                             <img src="{{asset('images/thermometer.jpg')}}">
-                            <input readonly id="temp-id" >
+                            <input readonly id="temp-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -61,7 +60,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/batch.jpg')}}">
-                        <input type="text" readonly id="batch-id" value="{{$batch->id}}">
+                        <input type="text" readonly id="batch-id" value="{{$batch->batch}}">
                     </div>
                     <div class="data-item">
                         <p>Batch ID</p>
@@ -70,7 +69,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/bottle.jpg')}}">
-                        <input readonly  id="bottled-id">
+                        <input readonly  id="bottled-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Bottles</p>
@@ -81,7 +80,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humid.jpg')}}">
-                        <input readonly  id="humidity-id">
+                        <input readonly  id="humidity-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -99,7 +98,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.jpg')}}">
-                        <input readonly  id="accept-id">
+                        <input readonly  id="accept-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -110,7 +109,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.jpg')}}">
-                        <input readonly id="vibration-id">
+                        <input readonly id="vibration-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -128,7 +127,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/denied.jpg')}}">
-                        <input readonly  id="defect-id">
+                        <input readonly  id="defect-id" value="0">
 
                     </div>
                     <div class="data-item">
@@ -140,32 +139,45 @@
     </main>
     <aside>
         <div class="main-container">
-            <div id="myBar"  class="main-fill"></div>
+            <div id="myBar"></div>
         </div>
         <img src="{{asset('images/main.jpg')}}">
     </aside>
 </div>
 </body>
 {{--TO DO:--}}
-{{--should the script first be called when we press start -> if so fix it --}}
-{{--data sent to java should be interpreted and written to UA EXPERT--}}
-{{--When we click create pdf button, a pdf should be created, check javascript.js for inspiration--}}
+{{--read batch id from ua expert, and send in subscription.--}}
+{{--modify migrations to fit new batch id from create view--}}
+{{--batch id? from create view -> should we manually insert batch id.--}}
+{{--GET request in AJAX, should be post but it doesnt work?? mby ask AI--}}
+{{--When we click create pdf button, a pdf should be created--}}
 {{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
 , and then when full again, send start values.--}}
-{{--report--}}
+
+
 <script>setInterval(function (){
+
         $.ajax({
             url: "api/collection/"+{{$batch->id}},
             type: "GET",
             success: function(data) {
-                console.log(data)
-                document.getElementById('temp-id').value=data['temp'].temperature;
-                document.getElementById('bottled-id').value=data['batch'].producedAmount;
-                document.getElementById('defect-id').value=data['batch'].defectAmount;
-                document.getElementById('accept-id').value=data['batch'].acceptedAmount;
-                document.getElementById('humidity-id').value=data['humidity'].humidity;
-                document.getElementById('vibration-id').value=data['vibration'].vibration;
+                if(data['temp']!=null){
+                    document.getElementById('temp-id').value=data['temp'].temperature;
+                }
+                if(data['batch']!=null){
+                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
+                    document.getElementById('defect-id').value=data['batch'].defectAmount;
+                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
+                }
+                if(data['humidity']!=null){
+                    document.getElementById('humidity-id').value=data['humidity'].humidity;
+                }
+                if(data['vibration']!=null){
+                    document.getElementById('vibration-id').value=data['vibration'].vibration;
+                }
             }
         })
-    },1000)</script>
+    },1000)
+</script>
+
 </html>

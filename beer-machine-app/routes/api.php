@@ -29,7 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('posttest',[ProductController::class,'updateData']);
-Route::get('testing',[ProductController::class,'resourceFunction']);
 
-Route::get('endpoint', [ProductController::class,'startCmd']);
+
 Route::get('collection/{batch}',[ProductController::class,'getEverything']);
+
+
