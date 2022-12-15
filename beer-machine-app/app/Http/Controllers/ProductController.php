@@ -91,18 +91,20 @@ class ProductController extends Controller
         $batchId = Batch::all()->last();
 
         if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null if the simulation is used
-            $temp = "null";
+            $avgTemp = "null";
         }
         else{
-            $temp = Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first()->temperature;        }
+            $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
+
+        }
 
         if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
-            $humidity = "null";
+            $avgHumidity = "null";
         }
         else{
-            $humidity = Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first()->humidity;
+            $avgHumidity = Humidity::all()->where('batch_id', $batchId->id)->avg('humidity');
         }
 
-        return view('dashboard')->with('batch', $batchId)->with('temp', $temp)->with('humidity', $humidity);
+        return view('dashboard')->with('batch', $batchId)->with('temp', $avgTemp)->with('humidity', $avgHumidity);
     }
 }
