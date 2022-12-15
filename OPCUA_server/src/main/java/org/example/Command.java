@@ -62,7 +62,9 @@ public final class Command {
         return instance;
     }
     public void beerParameters(float batchId, float beerId,float speed, float amountBeer){
-        //Speed
+
+
+
         NodeId machineSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
         //BatchID
         NodeId id = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");

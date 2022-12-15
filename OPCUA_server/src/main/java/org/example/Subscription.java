@@ -45,16 +45,29 @@ public class Subscription {
             client.connect().get();
 
             //current amount
-            nodeCreation(client,"::Program:Cube.Admin.ProdProcessedCount");
+            nodeCreation(client,"::Program:Cube.Admin.ProdProcessedCount",0);
             //defect amount
-            nodeCreation(client,"::Program:Cube.Admin.ProdDefectiveCount");
+            nodeCreation(client,"::Program:Cube.Admin.ProdDefectiveCount",3000);
             //temperature
-            nodeCreation(client,"::Program:Cube.Status.Parameter[3].Value");
+            nodeCreation(client,"::Program:Cube.Status.Parameter[3].Value",3000);
             //humidity
-            nodeCreation(client,"::Program:Cube.Status.Parameter[2].Value");
-            // vibration
-            nodeCreation(client,"::Program:Cube.Status.Parameter[4].Value");
 
+            nodeCreation(client,"::Program:Cube.Status.Parameter[2].Value",5000);
+            // vibration
+            nodeCreation(client,"::Program:Cube.Status.Parameter[4].Value",5000);
+            // barley
+            nodeCreation(client,"::Program:Inventory.Barley",5000);
+            // hops
+            nodeCreation(client,"::Program:Inventory.Hops",5000);
+            // malt
+            nodeCreation(client,"::Program:Inventory.Malt",5000);
+            // wheat
+            nodeCreation(client,"::Program:Inventory.Wheat",5000);
+            // yeast
+            nodeCreation(client,"::Program:Inventory.Yeast",5000);
+
+            nodeCreation(client,"::Program:Maintenance.Counter",5000);
+            //Speed
             // let the example run forever
             while(true)
             {
@@ -69,9 +82,7 @@ public class Subscription {
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
 
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
-        if((int)value.getValue().getValue() == 0){
-            return;
-        }
+
         try {
             Server.sendPOST(itemName, value.getValue().getValue());
         } catch (IOException e) {
@@ -80,7 +91,7 @@ public class Subscription {
     }
 
 
-    private static void nodeCreation(OpcUaClient client, String identifier) throws ExecutionException, InterruptedException {
+    private static void nodeCreation(OpcUaClient client, String identifier,double interval) throws ExecutionException, InterruptedException {
         NodeId humidity  = new NodeId(6, identifier);
         ReadValueId read = new ReadValueId(humidity, AttributeId.Value.uid(), null, null);
 
@@ -89,7 +100,7 @@ public class Subscription {
         UInteger clientHandle = subscription.getSubscriptionId();
         MonitoringParameters parameters = new MonitoringParameters(
                 clientHandle,
-                1000.0,     // sampling interval
+                interval,     // sampling interval
                 null,       // filter, null means use default
                 Unsigned.uint(10),   // queue size
                 true        // discard oldest
