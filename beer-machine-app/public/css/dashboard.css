@@ -1,0 +1,39 @@
+body{
+    margin:0;
+}
+header {
+    background: rgba(255, 136, 40);
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header img {
+    height: 100px;
+    object-fit: contain;
+}
+
+.dashboard-info{
+    display: flex;
+}
+.nav{
+    width: 200px;
+    text-align: center;
+    -ms-transform: translateY(20%);
+    transform: translateY(20%);
+}
+.batch-info{
+    width: 50%;
+    display: flex;
+    gap: 50px;
+}
+.graph-info{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+#bar{
+    width: 150px;
+    height: 200px;
+}

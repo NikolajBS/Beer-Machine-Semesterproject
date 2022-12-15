@@ -1,4 +1,4 @@
-
+let state = 0;
         $('#startBtn').click(function() {
             maintenanceVal();
             $.ajax({
@@ -12,6 +12,7 @@
                     console.log(data);
                 }
             });
+            state = 2;
         });
         $('#submitBtn').click(function() {
             let batchId = document.getElementById('batch-id').value;
@@ -107,6 +108,7 @@
                     console.log(data);
                 }
             });
+            state = 3;
         });
 
         $('#resetBtn').click(function() {
@@ -121,6 +123,7 @@
                     console.log(data);
                 }
             });
+            state = 1;
         });
         $('#clearBtn').click(function() {
             $.ajax({
@@ -134,6 +137,7 @@
                     console.log(data);
                 }
             });
+            state = 5;
         });
         $('#abortBtn').click(function() {
             $.ajax({
@@ -147,5 +151,6 @@
                     console.log(data);
                 }
             });
+            state = 4;
         });
 
