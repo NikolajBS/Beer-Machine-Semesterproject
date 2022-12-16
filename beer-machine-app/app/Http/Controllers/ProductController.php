@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TemperatureResource;
 use App\Models\Batch;
 use App\Models\Humidity;
+use App\Models\Inventory;
 use App\Models\Temperature;
 use App\Models\Vibration;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ProductController extends Controller
         switch ($type){
             case "::Program:Cube.Admin.ProdProcessedCount":
                 $batch->producedAmount = $value;
-                $batch->acceptedAmount = $batch->producedAmount-$batch->defectAmount;
+                $batch->acceptedAmount = $value-$batch->defectAmount;
                 $batch->save();
                 break;
             case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -73,8 +74,37 @@ class ProductController extends Controller
                 $vibration->vibration = $value;
                 $vibration->batch_id = $batch->id;
                 $vibration->save();
-
-
+                break;
+            case "::Program:Inventory.Barley":
+                $inv = Inventory::first();
+                $inv->barley = $value;
+                $inv->save();
+                break;
+            case "::Program:Inventory.Hops":
+                $inv = Inventory::first();
+                $inv->hops = $value;
+                $inv->save();
+                break;
+            case "::Program:Inventory.Malt":
+                $inv = Inventory::first();
+                $inv->malt = $value;
+                $inv->save();
+                break;
+            case "::Program:Inventory.Wheat":
+                $inv = Inventory::first();
+                $inv->wheat = $value;
+                $inv->save();
+                break;
+            case "::Program:Inventory.Yeast":
+                $inv = Inventory::first();
+                $inv->yeast = $value;
+                $inv->save();
+                break;
+            case "::Program:Maintenance.Counter":
+                $inv = Inventory::first();
+                $inv->maintenance = $value;
+                $inv->save();
+                break;
         }
         return response()->json([\request()->all()]);
     }
@@ -85,5 +115,10 @@ class ProductController extends Controller
         $vibration = Vibration::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
 
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,'vibration'=>$vibration]);
+    }
+    function getInventory(){
+        $inventory = Inventory::first();
+        return response()->json(['barley'=>$inventory->barley,'malt'=>$inventory->malt,'hops'=>$inventory->hops,
+            'yeast'=>$inventory->yeast,'wheat'=>$inventory->wheat,'maintenance'=>$inventory->maintenance]);
     }
 }

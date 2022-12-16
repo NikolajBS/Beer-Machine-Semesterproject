@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::redirect('/','home');
 Route::get('home', function (){
     $batch = Batch::all()->last();
     return view('home',['batch'=>$batch]);
