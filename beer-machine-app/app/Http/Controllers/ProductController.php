@@ -8,6 +8,7 @@ use App\Models\Humidity;
 use App\Models\Temperature;
 use App\Models\Vibration;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isNull;
 
 class ProductController extends Controller
 {
@@ -85,5 +86,25 @@ class ProductController extends Controller
         $vibration = Vibration::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
 
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,'vibration'=>$vibration]);
+    }
+    function getDashboard(){
+        $batchId = Batch::all()->last();
+
+        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null if the simulation is used
+            $avgTemp = "null";
+        }
+        else{
+            $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
+
+        }
+
+        if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
+            $avgHumidity = "null";
+        }
+        else{
+            $avgHumidity = Humidity::all()->where('batch_id', $batchId->id)->avg('humidity');
+        }
+
+        return view('dashboard')->with('batch', $batchId)->with('temp', $avgTemp)->with('humidity', $avgHumidity);
     }
 }
