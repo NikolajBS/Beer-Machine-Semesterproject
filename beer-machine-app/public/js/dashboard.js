@@ -56,28 +56,42 @@ let barChart = new Chart(bar, {
     }
 });
 
+function readStateCookie(){
+    let index = document.cookie.indexOf("state");
+    let curState = document.cookie.substring(index+6, index+7);
+    return parseInt(curState);
+}
 function timer(){
-    switch (state){
+    switch (readStateCookie()){
         case 1:
-            document.getElementById("state1").innerHTML = state1++;
+            document.getElementById("state1").innerHTML = ++state1;
             //console.log(data);// = state1;
             data[0] = state1;
             break;
         case 2:
-            document.getElementById("state2").innerHTML = state2++;
+            document.getElementById("state2").innerHTML = ++state2;
             data[1] = state2;
             break;
         case 3:
-            document.getElementById("state3").innerHTML = state3++;
+            document.getElementById("state3").innerHTML = ++state3;
             data[2] = state3;
             break;
         case 4:
-            document.getElementById("state4").innerHTML = state4++;
+            document.getElementById("state4").innerHTML = ++state4;
             data[3] = state4;
             break;
         case 5:
-            document.getElementById("state5").innerHTML = state5++;
+            document.getElementById("state5").innerHTML = ++state5;
             data[4] = state5;
+            break;
+        case 6:
+            document.getElementById("state1").innerHTML = 0;
+            document.getElementById("state2").innerHTML = 0;
+            document.getElementById("state3").innerHTML = 0;
+            document.getElementById("state4").innerHTML = 0;
+            document.getElementById("state5").innerHTML = 0;
+            data = [0,0,0,0,0];
+            window.location.reload(); //to clear cache
             break;
     }
 }

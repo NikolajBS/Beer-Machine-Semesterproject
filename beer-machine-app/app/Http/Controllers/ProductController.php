@@ -48,13 +48,13 @@ class ProductController extends Controller
         $batch = Batch::latest()->first();
 
         switch ($type){
-            case "::Program:Cube.Admin.ProdProcessedCount":
-                $batch->producedAmount = $value;
-                $batch->acceptedAmount = $batch->producedAmount-$batch->defectAmount;
-                $batch->save();
-                break;
             case "::Program:Cube.Admin.ProdDefectiveCount":
                 $batch->defectAmount=$value;
+                $batch->save();
+                break;
+            case "::Program:Cube.Admin.ProdProcessedCount":
+                $batch->producedAmount = $value;
+                $batch->acceptedAmount = $batch->$value-$batch->defectAmount;
                 $batch->save();
                 break;
             case "::Program:Cube.Status.Parameter[3].Value":
