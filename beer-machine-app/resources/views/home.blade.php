@@ -175,56 +175,46 @@
     </aside>
 </div>
 </body>
-{{--TO DO:--}}
-{{--read batch id from ua expert, and send in subscription.--}}
-{{--modify migrations to fit new batch id from create view--}}
-{{--batch id? from create view -> should we manually insert batch id.--}}
-{{--GET request in AJAX, should be post but it doesnt work?? mby ask AI--}}
-{{--When we click create pdf button, a pdf should be created--}}
-{{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
-, and then when full again, send start values.--}}
 
+<script>
 
-<script>setInterval(function (){
-
-        $.ajax({
-            url: "api/collection/"+{{$batch->id}},
-            type: "GET",
-            success: function(data) {
-                if(data['temp']!=null){
-                    document.getElementById('temp-id').value=data['temp'].temperature;
-                }
-                if(data['batch']!=null){
-                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
-                    document.getElementById('defect-id').value=data['batch'].defectAmount;
-                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
-                }
-                if(data['humidity']!=null){
-                    document.getElementById('humidity-id').value=data['humidity'].humidity;
-                }
-                if(data['vibration']!=null){
-                    document.getElementById('vibration-id').value=data['vibration'].vibration;
-                }
+    // on button click -> start
+    document.getElementById('startBtn').addEventListener('click', function() {
+        $test = setInterval(function () {
+            // break out of interval when all bottles are produced
+            if (document.getElementById('bottled-id').value === document.getElementById('amount-id').value) {
+                clearInterval($test)
             }
-        })
-    },1000)
 
-setInterval(function (){
-    $.ajax({
-        url: "api/inventory",
-        type: "GET",
-        success: function(data) {
-            console.log(data)
-            document.getElementById('progress-bar-barley').style.height=(data.barley/35000)*100+"%";
-            document.getElementById('progress-bar-hops').style.height=(data.hops/35000)*100+"%";
-            document.getElementById('progress-bar-malt').style.height=(data.malt/35000)*100+"%";
-            document.getElementById('progress-bar-yeast').style.height=(data.yeast/35000)*100+"%";
-            document.getElementById('progress-bar-wheat').style.height=(data.wheat/35000)*100+"%";
-            document.getElementById('myBar').style.height=100-(data.maintenance/30000)*100+"%";
-        }
-    })
-},5000)
+            $.ajax({
+                url: "api/collection/" + {{$batch->id}},
+                type: "GET",
+                success: function (data) {
+                    if (data['temp'] != null) {
+                        document.getElementById('temp-id').value = data['temp'].temperature;
+                    }
+                    if (data['batch'] != null) {
+                        document.getElementById('bottled-id').value = data['batch'].producedAmount;
+                        document.getElementById('defect-id').value = data['batch'].defectAmount;
+                        document.getElementById('accept-id').value = data['batch'].acceptedAmount;
+                    }
+                    if (data['humidity'] != null) {
+                        document.getElementById('humidity-id').value = data['humidity'].humidity;
+                    }
+                    if (data['vibration'] != null) {
+                        document.getElementById('vibration-id').value = data['vibration'].vibration;
+                    }
 
+                    document.getElementById('progress-bar-barley').style.height=(data['inventory'].barley/35000)*100+"%";
+                    document.getElementById('progress-bar-hops').style.height=(data['inventory'].hops/35000)*100+"%";
+                    document.getElementById('progress-bar-malt').style.height=(data['inventory'].malt/35000)*100+"%";
+                    document.getElementById('progress-bar-yeast').style.height=(data['inventory'].yeast/35000)*100+"%";
+                    document.getElementById('progress-bar-wheat').style.height=(data['inventory'].wheat/35000)*100+"%";
+                    document.getElementById('myBar').style.height=100-(data['inventory'].maintenance/30000)*100+"%";
+                }
+            })
+        }, 500)
+    });
 </script>
 
 </html>

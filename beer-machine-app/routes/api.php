@@ -34,3 +34,5 @@ Route::post('posttest',[ProductController::class,'updateData']);
 Route::get('collection/{batch}',[ProductController::class,'getEverything']);
 
 Route::get('inventory',[ProductController::class,'getInventory']);
+
+

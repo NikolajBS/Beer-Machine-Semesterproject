@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TemperatureResource;
+
 use App\Models\Batch;
 use App\Models\Humidity;
 use App\Models\Inventory;
@@ -16,6 +16,8 @@ class ProductController extends Controller
     public function index(){
         return view('home');
     }
+
+
 
     public function create(){
         return view('create');
@@ -109,16 +111,19 @@ class ProductController extends Controller
         return response()->json([\request()->all()]);
     }
     function getEverything(Batch $batch){
-
+        $inventory = Inventory::first();
         $temp = Temperature::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
         $humidity = Humidity::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
         $vibration = Vibration::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
 
-        return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,'vibration'=>$vibration]);
+        $data = ['wheat'=>$inventory->wheat,'barley'=>$inventory->barley,'yeast'=>$inventory->yeast,
+            'malt'=>$inventory->malt,'hops'=>$inventory->hops,'maintenance'=>$inventory->maintenance];
+
+        return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,
+            'vibration'=>$vibration,'inventory'=>$data]);
     }
-    function getInventory(){
-        $inventory = Inventory::first();
-        return response()->json(['barley'=>$inventory->barley,'malt'=>$inventory->malt,'hops'=>$inventory->hops,
-            'yeast'=>$inventory->yeast,'wheat'=>$inventory->wheat,'maintenance'=>$inventory->maintenance]);
-    }
+//    function getInventory(){
+//        $inventory = Inventory::first();
+//        return response()->json([]);
+//    }
 }
