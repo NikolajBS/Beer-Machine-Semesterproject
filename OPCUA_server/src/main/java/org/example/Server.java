@@ -11,9 +11,6 @@ import java.util.Arrays;
 
 public class Server {
 
-    private static final String POST_URL = "http://127.0.0.1:8000/api/posttest";
-    private static final String USER_AGENT = "Mozilla/5.0";
-
 
 public static void server() throws IOException {
 
