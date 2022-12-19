@@ -185,7 +185,6 @@
             if (document.getElementById('bottled-id').value === document.getElementById('amount-id').value) {
                 clearInterval($test)
             }
-
             $.ajax({
                 url: "api/collection/" + {{$batch->id}},
                 type: "GET",
@@ -205,12 +204,12 @@
                         document.getElementById('vibration-id').value = data['vibration'].vibration;
                     }
 
-                    document.getElementById('progress-bar-barley').style.height=(data['inventory'].barley/35000)*100+"%";
-                    document.getElementById('progress-bar-hops').style.height=(data['inventory'].hops/35000)*100+"%";
-                    document.getElementById('progress-bar-malt').style.height=(data['inventory'].malt/35000)*100+"%";
-                    document.getElementById('progress-bar-yeast').style.height=(data['inventory'].yeast/35000)*100+"%";
-                    document.getElementById('progress-bar-wheat').style.height=(data['inventory'].wheat/35000)*100+"%";
-                    document.getElementById('myBar').style.height=100-(data['inventory'].maintenance/30000)*100+"%";
+                    document.getElementById('progress-bar-barley').style.height = (data['inventory'].barley / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-hops').style.height = (data['inventory'].hops / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-malt').style.height = (data['inventory'].malt / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-yeast').style.height = (data['inventory'].yeast / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-wheat').style.height = (data['inventory'].wheat / 35000) * 100 + "%";
+                    document.getElementById('myBar').style.height = 100 - (data['inventory'].maintenance / 30000) * 100 + "%";
                 }
             })
         }, 500)
