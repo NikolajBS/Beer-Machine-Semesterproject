@@ -17,7 +17,6 @@
 <div class="dashboard-info">
     <div class="nav">
         <button>Home</button>
-        <button id="timer">Switch state test</button>
     </div>
     <div class="batch-info">
         <div>

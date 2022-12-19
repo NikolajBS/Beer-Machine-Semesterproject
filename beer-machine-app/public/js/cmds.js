@@ -1,19 +1,8 @@
-//let state = 0;
-
-
 function setStateCookie(state = 0){
     document.cookie = "state="+state; //https://www.w3schools.com/js/js_cookies.asp
 }
 setStateCookie();
 
-function resetTimers(){
-    document.getElementById("state1").innerHTML = 0;
-    document.getElementById("state2").innerHTML = 0;
-    document.getElementById("state3").innerHTML = 0;
-    document.getElementById("state4").innerHTML = 0;
-    document.getElementById("state5").innerHTML = 0;
-
-}
 console.log("The cookie includees: " + document.cookie);
         $('#startBtn').click(function() {
             // maintenanceVal();
@@ -28,7 +17,6 @@ console.log("The cookie includees: " + document.cookie);
                     console.log(data);
                 }
             });
-            //state = 2;
             setStateCookie(2);
         });
         $('#submitBtn').click(function() {
@@ -127,7 +115,6 @@ console.log("The cookie includees: " + document.cookie);
                     console.log(data);
                 }
             });
-            //state = 3;
             setStateCookie(3);
         });
 
@@ -143,7 +130,6 @@ console.log("The cookie includees: " + document.cookie);
                     console.log(data);
                 }
             });
-            //state = 1;
             setStateCookie(1);
         });
         $('#clearBtn').click(function() {
@@ -158,7 +144,6 @@ console.log("The cookie includees: " + document.cookie);
                     console.log(data);
                 }
             });
-            //state = 5;
             setStateCookie(5);
         });
         $('#abortBtn').click(function() {
@@ -173,7 +158,6 @@ console.log("The cookie includees: " + document.cookie);
                     console.log(data);
                 }
             });
-            //state = 4;
             setStateCookie(4);
         });
 

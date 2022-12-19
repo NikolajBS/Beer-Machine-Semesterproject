@@ -90,12 +90,11 @@ class ProductController extends Controller
     function getDashboard(){
         $batchId = Batch::all()->last();
 
-        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null if the simulation is used
+        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
             $avgTemp = "null";
         }
         else{
             $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
-
         }
 
         if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){

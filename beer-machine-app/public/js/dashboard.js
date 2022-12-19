@@ -100,11 +100,3 @@ setInterval(function (){
     barChart.update();
 }, 1000);
 
-document.getElementById("timer").addEventListener('click', function (){
-    state++;
-    console.log(state);
-    if (state > 5){
-        state = 1;
-    }
-
-})
