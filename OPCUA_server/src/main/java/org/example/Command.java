@@ -35,7 +35,6 @@ public final class Command {
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
 
-
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
                 if(endpoints.get(i).getSecurityMode().name().equals("None")){ //None or SignAndEncrypt

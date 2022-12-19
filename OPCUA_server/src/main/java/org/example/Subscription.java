@@ -101,11 +101,7 @@ public class Subscription {
 
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
         createEntry(itemName,value.getValue().getValue());
-//        try {
-//            Server.sendPOST(itemName, value.getValue().getValue());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
     private static void createEntry(String name, Object val){
         String sql = null;
