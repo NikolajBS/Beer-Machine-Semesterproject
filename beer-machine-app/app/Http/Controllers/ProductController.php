@@ -48,13 +48,13 @@ class ProductController extends Controller
         $batch = Batch::latest()->first();
 
         switch ($type){
-            case "::Program:Cube.Admin.ProdProcessedCount":
-                $batch->producedAmount = $value;
-                $batch->acceptedAmount = $batch->producedAmount-$batch->defectAmount;
-                $batch->save();
-                break;
             case "::Program:Cube.Admin.ProdDefectiveCount":
                 $batch->defectAmount=$value;
+                $batch->save();
+                break;
+            case "::Program:Cube.Admin.ProdProcessedCount":
+                $batch->producedAmount = $value;
+                $batch->acceptedAmount = $batch->$value-$batch->defectAmount;
                 $batch->save();
                 break;
             case "::Program:Cube.Status.Parameter[3].Value":
@@ -90,12 +90,11 @@ class ProductController extends Controller
     function getDashboard(){
         $batchId = Batch::all()->last();
 
-        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null if the simulation is used
+        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
             $avgTemp = "null";
         }
         else{
             $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
-
         }
 
         if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){

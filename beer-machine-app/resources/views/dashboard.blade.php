@@ -17,7 +17,6 @@
 <div class="dashboard-info">
     <div class="nav">
         <button>Home</button>
-        <button id="timer">Switch state test</button>
     </div>
     <div class="batch-info">
         <div>
@@ -26,11 +25,11 @@
             <h2>Total produced</h2>
             <h2>Total defects</h2>
             <h2>Total acceptable</h2>
-            <h2>State 1</h2>
-            <h2>State 2</h2>
-            <h2>State 3</h2>
-            <h2>State 4</h2>
-            <h2>State 5</h2>
+            <h2>State 1 (Reset)</h2>
+            <h2>State 2 (Start)</h2>
+            <h2>State 3 (Stop)</h2>
+            <h2>State 4 (Abort)</h2>
+            <h2>State 5 (Clear)</h2>
             <h2>Avg. temperature</h2>
             <h2>Avg. humidity</h2>
         </div>
