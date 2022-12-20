@@ -28,6 +28,6 @@ Route::get('home',[ProductController::class,'getLastBatch']
 
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
-
+Route::get('dashboard',[ProductController::class, 'getDashboard'])->name('dashboard');
 
 

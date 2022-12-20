@@ -1,4 +1,9 @@
+function setStateCookie(state = 0){
+    document.cookie = "state="+state; //https://www.w3schools.com/js/js_cookies.asp
+}
+setStateCookie();
 
+console.log("The cookie includees: " + document.cookie);
         $('#startBtn').click(function() {
             $.ajax({
                 url: "http://127.0.0.1:3001/post",
@@ -11,6 +16,7 @@
                     console.log(data);
                 }
             });
+            setStateCookie(2);
         });
         $('#submitBtn').click(function() {
             let batchId = document.getElementById('batch-id').value;
@@ -32,8 +38,10 @@
                     console.log(data);
                 }
             });
-        });
+            setStateCookie(6);
 
+        });
+        
         $('#stopBtn').click(function() {
             $.ajax({
                 url: "http://127.0.0.1:3001/post",
@@ -46,6 +54,7 @@
                     console.log(data);
                 }
             });
+            setStateCookie(3);
         });
 
         $('#resetBtn').click(function() {
@@ -60,6 +69,7 @@
                     console.log(data);
                 }
             });
+            setStateCookie(1);
         });
         $('#clearBtn').click(function() {
             $.ajax({
@@ -73,6 +83,7 @@
                     console.log(data);
                 }
             });
+            setStateCookie(5);
         });
         $('#abortBtn').click(function() {
             $.ajax({
@@ -86,6 +97,7 @@
                     console.log(data);
                 }
             });
+            setStateCookie(4);
         });
         document.getElementById('startBtn').addEventListener('click', function() {
             $test = setInterval(function () {
