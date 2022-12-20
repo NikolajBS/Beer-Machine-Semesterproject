@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('wheat')->nullable();
             $table->float('yeast')->nullable();
             $table->unsignedInteger('maintenance')->nullable();
-            $table->timestamps();
+
         });
     }
 

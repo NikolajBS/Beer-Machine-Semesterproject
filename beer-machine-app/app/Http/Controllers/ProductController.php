@@ -36,7 +36,12 @@ class ProductController extends Controller
         return redirect()->route('home');
     }
 
-    function getEverything(Batch $batch){
+    function getLastBatch(){
+        $batch = Batch::all()->last();
+        return view('home',['batch'=>$batch]);
+    }
+    function getEverything(){
+        $batch = Batch::all()->last();
         $inventory = Inventory::first();
         $temp = Temperature::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
         $humidity = Humidity::where('batch_id',$batch->id)->orderBy('id','DESC')->first();
@@ -48,4 +53,5 @@ class ProductController extends Controller
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,
             'vibration'=>$vibration,'inventory'=>$data]);
     }
+
 }
