@@ -3,103 +3,105 @@ function setStateCookie(state = 0){
 }
 setStateCookie();
 
-console.log("The cookie includees: " + document.cookie);
-        $('#startBtn').click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 2
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(2);
-        });
-        $('#submitBtn').click(function() {
-            let batchId = document.getElementById('batch-id').value;
-            let productType = document.getElementById('product-type').value;
-            let speedId = document.getElementById('speed-id').value;
-            let amountId = document.getElementById('amount-id').value;
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    id: batchId,
-                    type: productType,
-                    speed: speedId,
-                    amount: amountId
 
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(6);
+$('#startBtn').click(function() {
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            CmdChange: 2
+        },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(2);
+});
 
-        });
-        
-        $('#stopBtn').click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 3
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(3);
-        });
+$('#submitBtn').click(function() {
+    let batchId = document.getElementById('batch-id').value;
+    let productType = document.getElementById('product-type').value;
+    let speedId = document.getElementById('speed-id').value;
+    let amountId = document.getElementById('amount-id').value;
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            id: batchId,
+            type: productType,
+            speed: speedId,
+            amount: amountId
+            },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(6);
+});
 
-        $('#resetBtn').click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 1
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(1);
-        });
-        $('#clearBtn').click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 5
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(5);
-        });
-        $('#abortBtn').click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 4
-                },
-                success: function(data) {
-                    // Print out the data
-                    console.log(data);
-                }
-            });
-            setStateCookie(4);
-        });
-        document.getElementById('startBtn').addEventListener('click', function() {
+$('#stopBtn').click(function() {
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            CmdChange: 3
+        },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(3);
+});
+
+$('#resetBtn').click(function() {
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            CmdChange: 1
+        },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(1);
+});
+
+$('#clearBtn').click(function() {
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            CmdChange: 5
+        },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(5);
+});
+
+$('#abortBtn').click(function() {
+    $.ajax({
+        url: "http://127.0.0.1:3001/post",
+        type: "POST",
+        data: {
+            CmdChange: 4
+        },
+        success: function(data) {
+            // Print out the data
+            console.log(data);
+        }
+    });
+    setStateCookie(4);
+});
+
+document.getElementById('startBtn').addEventListener('click', function() {
             $test = setInterval(function () {
                 // break out of interval when all bottles are produced
                 if (document.getElementById('bottled-id').value === document.getElementById('amount-id').value) {

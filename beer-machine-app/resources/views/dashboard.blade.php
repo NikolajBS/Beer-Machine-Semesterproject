@@ -16,7 +16,7 @@
 
 <div class="dashboard-info">
     <div class="nav">
-        <button>Home</button>
+        <a href="{{ route('home') }}">Home</a>
     </div>
     <div class="batch-info">
         <div>

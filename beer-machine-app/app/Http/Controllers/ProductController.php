@@ -17,6 +17,7 @@ class ProductController extends Controller
     public function create(){
         return view('create');
     }
+
     public function store(Request $request){
         //validation
         $request->validate(['type'=>'required|between:0,5',
@@ -36,6 +37,7 @@ class ProductController extends Controller
 
         return redirect()->route('home');
     }
+
     function getEverything(){
         $batch = Batch::all()->last();
         $inventory = Inventory::first();
@@ -49,17 +51,18 @@ class ProductController extends Controller
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,
             'vibration'=>$vibration,'inventory'=>$data]);
     }
+
     function getDashboard(){
         $batchId = Batch::all()->last();
 
-        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
+        if (Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
             $avgTemp = "null";
         }
         else{
             $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
         }
 
-        if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
+        if (Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
             $avgHumidity = "null";
         }
         else{

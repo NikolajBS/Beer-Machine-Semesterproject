@@ -23,9 +23,7 @@ use Illuminate\Http\Request;
 */
 
 Route::redirect('/','home');
-Route::get('home',[ProductController::class,'getLastBatch']
-)->name('home');
-
+Route::get('home',[ProductController::class,'getLastBatch'])->name('home');
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');
 Route::get('dashboard',[ProductController::class, 'getDashboard'])->name('dashboard');

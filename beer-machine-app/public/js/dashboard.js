@@ -1,7 +1,6 @@
 let pie = document.getElementById("pie").getContext("2d");
 let defect = document.getElementById("defect").innerText;
 let acceptable = document.getElementById("acceptable").innerText;
-
 let pieLabels = ["Defect", "Acceptable"];
 let bgColorPie = ["red", "green"];
 let pieData = [defect, acceptable];
@@ -31,9 +30,8 @@ let state5 = document.getElementById("state5").innerHTML;
 let barLabel = ["State 1","State 2", "State 3", "State 4", "State 5"]
 let bgColorBar = ["red", "green","blue","yellow","cyan"]
 let data = [state1, state2, state3, state4, state5]
-console.log(state1);
-
 let bar = document.getElementById("bar").getContext("2d");
+
 let barChart = new Chart(bar, {
     type: "bar",
     data: {
@@ -61,6 +59,7 @@ function readStateCookie(){
     let curState = document.cookie.substring(index+6, index+7);
     return parseInt(curState);
 }
+
 function timer(){
     switch (readStateCookie()){
         case 1:
@@ -95,6 +94,7 @@ function timer(){
             break;
     }
 }
+
 setInterval(function (){
     timer();
     barChart.update();
