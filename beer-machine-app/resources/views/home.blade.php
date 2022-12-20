@@ -20,9 +20,8 @@
         <button id="stopBtn">Stop</button>
         <button id="abortBtn">Abort</button>
         <button id="clearBtn">Clear</button>
-        <button id="editBtn" onclick="location.href='{{ route('submit') }}'">
-            Edit</button>
-        <button id="createPdf">Create PDF</button>
+        <button id="editBtn" onclick="location.href='{{ route('submit') }}'">Edit</button>
+        <button id="createPdf" onclick="location.href='{{ route('dashboard') }}'">Dashboard</button>
     </aside>
     <main class="flex-container-main">
         <article class="container-article">

@@ -56,7 +56,6 @@ public static void server() throws IOException {
 }
 
     private static float[] queryToMap(String query) {
-
         float[] myArr;
         String[] test = query.split("&");
         myArr = new float[test.length];

@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 public class Subscription {
 
     private static Connection conn;
+
     public static void main(String[] args) {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/beers", "root", "secret");
@@ -52,8 +53,7 @@ public class Subscription {
                     "::Program:Cube.Status.Parameter[4].Value","::Program:Inventory.Barley",
                     "::Program:Inventory.Hops","::Program:Inventory.Malt","::Program:Inventory.Wheat",
                     "::Program:Inventory.Yeast","::Program:Maintenance.Counter"};
-            for (String node : nodes
-            ) {
+            for (String node : nodes){
                 NodeId nodeId = new NodeId(6, node);
                 ReadValueId readValueId = new ReadValueId(nodeId, AttributeId.Value.uid(), null, null);
 
@@ -89,9 +89,7 @@ public class Subscription {
                     }
                 }
             }
-        } catch (UaException | InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (UaException | InterruptedException | ExecutionException | SQLException e) {
             e.printStackTrace();
         }
         while(true){
@@ -99,7 +97,6 @@ public class Subscription {
     }
         // remake this method, so that it redirects the values and POSTs to our website.
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
-
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
         createEntry(itemName,value.getValue().getValue().toString());
 

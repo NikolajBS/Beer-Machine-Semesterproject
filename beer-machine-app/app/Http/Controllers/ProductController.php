@@ -9,7 +9,6 @@ use App\Models\Inventory;
 use App\Models\Temperature;
 use App\Models\Vibration;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 class ProductController extends Controller
 {
@@ -50,6 +49,11 @@ class ProductController extends Controller
 
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,
             'vibration'=>$vibration,'inventory'=>$data]);
+    }
+
+    function getLastBatch(){
+        $batch = Batch::all()->last();
+        return view('home')->with('batch',$batch);
     }
 
     function getDashboard(){

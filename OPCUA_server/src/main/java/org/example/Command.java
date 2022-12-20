@@ -1,21 +1,11 @@
 package org.example;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author aqs
- */
 
 import java.util.List;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfigBuilder;
-import org.eclipse.milo.opcua.sdk.client.api.identity.IdentityProvider;
-import org.eclipse.milo.opcua.sdk.client.api.identity.UsernameProvider;
+
 import org.eclipse.milo.opcua.stack.client.DiscoveryClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
@@ -52,6 +42,7 @@ public final class Command {
             ex.printStackTrace();
         }
     }
+
     public static Command getInstance()
     {
         if(instance == null)
@@ -60,6 +51,7 @@ public final class Command {
         }
         return instance;
     }
+
     public void beerParameters(float batchId, float beerId,float speed, float amountBeer){
         NodeId machineSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
         //BatchID
@@ -74,6 +66,7 @@ public final class Command {
         client.writeValue(productId, DataValue.valueOnly(new Variant(beerId)));
         client.writeValue(amount, DataValue.valueOnly(new Variant(amountBeer)));
     }
+
     public void sendCommand(int command){
         //Control
         NodeId nodeControl = new NodeId(6, "::Program:Cube.Command.CntrlCmd");
@@ -87,10 +80,4 @@ public final class Command {
         NodeId nodeSend = new NodeId(6, "::Program:Cube.Command.CmdChangeRequest");
         client.writeValue(nodeSend, DataValue.valueOnly(new Variant(true)));
     }
-
-
-    public static IdentityProvider getIdentityProvider() {
-        return new UsernameProvider("sdu", "1234");
-    }
-
 }
