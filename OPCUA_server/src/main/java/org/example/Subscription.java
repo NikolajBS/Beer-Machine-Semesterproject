@@ -1,5 +1,6 @@
 package org.example;
 
+import org.bouncycastle.asn1.eac.UnsignedInteger;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfigBuilder;
 import org.eclipse.milo.opcua.sdk.client.api.subscriptions.UaMonitoredItem;
@@ -100,7 +101,7 @@ public class Subscription {
     private static void onSubscriptionValue(UaMonitoredItem item, DataValue value) {
 
         String itemName = (String) item.getReadValueId().getNodeId().getIdentifier();
-        createEntry(itemName,value.getValue().getValue());
+        createEntry(itemName,value.getValue().getValue().toString());
 
     }
     private static void createEntry(String name, Object val){
@@ -140,11 +141,9 @@ public class Subscription {
                 sql = "UPDATE inventories SET maintenance = ? WHERE id=1";
                 break;
         }
-
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setObject(1,val);
+            pstmt.setObject(1, val);
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
