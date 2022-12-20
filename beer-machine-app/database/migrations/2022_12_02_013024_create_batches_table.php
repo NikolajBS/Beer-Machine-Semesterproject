@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
-            $table->integer('batch');
-            $table->integer('type');
-            $table->integer('speed');
-            $table->integer('amount');
+            $table->integer('batch')->nullable();
+            $table->integer('type')->nullable();
+            $table->integer('speed')->nullable();
+            $table->integer('amount')->nullable();
             $table->integer('producedAmount');
             $table->integer('defectAmount');
             $table->integer('acceptedAmount');

@@ -11,9 +11,6 @@ import java.util.Arrays;
 
 public class Server {
 
-    private static final String POST_URL = "http://127.0.0.1:8000/api/posttest";
-    private static final String USER_AGENT = "Mozilla/5.0";
-
 
 public static void server() throws IOException {
 
@@ -42,8 +39,10 @@ public static void server() throws IOException {
                 }
                 // do something with request body
 
-                String response = "This is the response to the POST request";
+                String response = requestBody;
+                exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
                 exchange.sendResponseHeaders(200, response.getBytes().length);
+
                 OutputStream responseBody = exchange.getResponseBody();
                 responseBody.write(response.getBytes());
                 responseBody.close();
@@ -67,45 +66,7 @@ public static void server() throws IOException {
         return myArr;
     }
 
-
-    public static void sendPOST(String type, Object value) throws IOException {
-
-        URL obj = new URL(POST_URL);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        // For POST only - START
-        con.setDoOutput(true);
-        OutputStream os = con.getOutputStream();
-
-        String data = "type="+type+"&value="+value;
-
-        os.write(data.getBytes());
-        os.flush();
-        os.close();
-        // For POST only - END
-
-        int responseCode = con.getResponseCode();
-        System.out.println("POST Response Code :: " + responseCode);
-
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            // print result
-            System.out.println(response);
-        } else {
-            System.out.println("POST request did not work.");
-        }
-    }
-
     public static void main(String[] args) throws IOException {
-    server();
-    }
+        server();
+        }
 }

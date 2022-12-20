@@ -8,7 +8,9 @@
 </head>
 <body>
 <header>
-    <img src="{{asset('images/banner.jpg')}}">
+    <img src="{{asset('images/BRLOGO.png')}}">
+    <h1>Beer Brewer</h1>
+    <img src="{{asset('images/SDU_LOGO.png')}}">
 </header>
 <div class="flex-container">
 
@@ -26,23 +28,51 @@
         <article class="container-article">
             <div class="container-item">
                 <label>Barley</label>
-                <img src="{{asset('images/container.jpg')}}">
+                <div id="container-div">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar-barley">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="container-item">
                 <label>Hops</label>
-                <img src="{{asset('images/container.jpg')}}">
+                <div id="container-div">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar-hops">
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="container-item">
                 <label>Malt</label>
-                <img src="{{asset('images/container.jpg')}}">
+                <div id="container-div">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar-malt">
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="container-item">
                 <label>Wheat</label>
-                <img src="{{asset('images/container.jpg')}}">
+                <div id="container-div">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar-wheat">
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="container-item">
                 <label>Yeast</label>
-                <img src="{{asset('images/container.jpg')}}">
+                <div id="container-div">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar-yeast">
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </article>
@@ -50,8 +80,8 @@
             <div>
                 <div class="test">
                     <div class="data-item">
-                            <img src="{{asset('images/thermometer.jpg')}}">
-                            <input readonly id="temp-id" value="0">
+                        <img src="{{asset('images/thermometer.svg')}}">
+                        <input readonly id="temp-id" value="0">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -59,7 +89,7 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/batch.jpg')}}">
+                        <img src="{{asset('images/package.svg')}}">
                         <input type="text" readonly id="batch-id" value="{{$batch->batch}}">
                     </div>
                     <div class="data-item">
@@ -68,18 +98,18 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/bottle.jpg')}}">
+                        <img src="{{asset('images/beer.svg')}}">
                         <input readonly  id="bottled-id" value="0">
                     </div>
                     <div class="data-item">
-                        <p>Bottles</p>
+                        <p>Produced</p>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/humid.jpg')}}">
+                        <img src="{{asset('images/humidity.png')}}">
                         <input readonly  id="humidity-id" value="0">
                     </div>
                     <div class="data-item">
@@ -88,7 +118,7 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/handle.jpg')}}" >
+                        <img src="{{asset('images/beertap.svg')}}" >
                         <input readonly id="amount-id" value="{{$batch->amount}}">
                     </div>
                     <div class="data-item">
@@ -97,7 +127,7 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/accept.jpg')}}">
+                        <img src="{{asset('images/accept.svg')}}">
                         <input readonly  id="accept-id" value="0">
                     </div>
                     <div class="data-item">
@@ -108,7 +138,7 @@
             <div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/vibration.jpg')}}">
+                        <img src="{{asset('images/vibration.svg')}}">
                         <input readonly id="vibration-id" value="0">
                     </div>
                     <div class="data-item">
@@ -117,7 +147,7 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/ppm.jpg')}}">
+                        <img src="{{asset('images/speedometer.svg')}}">
                         <input readonly  id="ppm-id" value="{{$batch->speed}}">
                     </div>
                     <div class="data-item">
@@ -126,7 +156,7 @@
                 </div>
                 <div class="test">
                     <div class="data-item">
-                        <img src="{{asset('images/denied.jpg')}}">
+                        <img src="{{asset('images/defect.svg')}}">
                         <input readonly  id="defect-id" value="0">
 
                     </div>
@@ -141,43 +171,8 @@
         <div class="main-container">
             <div id="myBar"></div>
         </div>
-        <img src="{{asset('images/main.jpg')}}">
+        <img src="{{asset('images/maintenance.svg')}}">
     </aside>
 </div>
 </body>
-{{--TO DO:--}}
-{{--read batch id from ua expert, and send in subscription.--}}
-{{--modify migrations to fit new batch id from create view--}}
-{{--batch id? from create view -> should we manually insert batch id.--}}
-{{--GET request in AJAX, should be post but it doesnt work?? mby ask AI--}}
-{{--When we click create pdf button, a pdf should be created--}}
-{{--maintenance and maybe containers should drop in % and then stop production maybe by sending stop values
-, and then when full again, send start values.--}}
-
-
-<script>setInterval(function (){
-
-        $.ajax({
-            url: "api/collection/"+{{$batch->id}},
-            type: "GET",
-            success: function(data) {
-                if(data['temp']!=null){
-                    document.getElementById('temp-id').value=data['temp'].temperature;
-                }
-                if(data['batch']!=null){
-                    document.getElementById('bottled-id').value=data['batch'].producedAmount;
-                    document.getElementById('defect-id').value=data['batch'].defectAmount;
-                    document.getElementById('accept-id').value=data['batch'].acceptedAmount;
-                }
-                if(data['humidity']!=null){
-                    document.getElementById('humidity-id').value=data['humidity'].humidity;
-                }
-                if(data['vibration']!=null){
-                    document.getElementById('vibration-id').value=data['vibration'].vibration;
-                }
-            }
-        })
-    },1000)
-</script>
-
 </html>

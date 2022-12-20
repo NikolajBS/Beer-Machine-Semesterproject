@@ -22,10 +22,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('home', function (){
-    $batch = Batch::all()->last();
-    return view('home',['batch'=>$batch]);
-})->name('home');
+Route::redirect('/','home');
+Route::get('home',[ProductController::class,'getLastBatch']
+)->name('home');
 
 Route::get('register', [ProductController::class, 'create'])->name('submit');
 Route::post('register',[ProductController::class,'store'])->name('store');

@@ -35,7 +35,6 @@ public final class Command {
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
 
-
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
                 if(endpoints.get(i).getSecurityMode().name().equals("None")){ //None or SignAndEncrypt
@@ -62,7 +61,6 @@ public final class Command {
         return instance;
     }
     public void beerParameters(float batchId, float beerId,float speed, float amountBeer){
-        //Speed
         NodeId machineSpeed  = new NodeId(6, "::Program:Cube.Command.MachSpeed");
         //BatchID
         NodeId id = new NodeId(6, "::Program:Cube.Command.Parameter[0].Value");

@@ -5,7 +5,6 @@ setStateCookie();
 
 console.log("The cookie includees: " + document.cookie);
         $('#startBtn').click(function() {
-            // maintenanceVal();
             $.ajax({
                 url: "http://127.0.0.1:3001/post",
                 type: "POST",
@@ -42,67 +41,7 @@ console.log("The cookie includees: " + document.cookie);
             setStateCookie(6);
 
         });
-        let currentHeight=100;
-        // function maintenanceVal (){
-        //     // when stop is clicked we cancel the interval call.
-        //     document.getElementById('stopBtn').onclick = function (){
-        //       clearInterval(start);
-        //
-        //     };
-        //     const start = setInterval(function () {
-        //         currentHeight -= 0.5;
-        //         document.getElementById('myBar').style.height = currentHeight.toString() + "%";
-        //         // if true, stop production
-        //         if (currentHeight <= 20) {
-        //             clearInterval(start);
-        //             setTimeout(function (){
-        //                 alert("Machine needs repairing");
-        //             })
-        //             mainentenancePause();
-        //             let refill = setInterval(function (){
-        //                 currentHeight += 0.5;
-        //                 document.getElementById('myBar').style.height = currentHeight.toString() + "%";
-        //                 // if true, start again
-        //                 if(currentHeight>=100){
-        //                     clearInterval(refill);
-        //                     setTimeout(function (){
-        //                         alert("Click to begin production again")
-        //                     })
-        //                     // send start cmd to Java
-        //                     mainentenanceStart();
-        //                     // recursive call
-        //                     maintenanceVal();
-        //                 }
-        //             },1000);
-        //         }
-        //     }, 1000);
-        // }
-
-        function mainentenanceStart(){
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 2
-                },
-                success: function(data) {
-                    console.log(data)
-                }
-            });
-        }
-        function mainentenancePause(){
-            $.ajax({
-                url: "http://127.0.0.1:3001/post",
-                type: "POST",
-                data: {
-                    CmdChange: 3
-                },
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-
+        
         $('#stopBtn').click(function() {
             $.ajax({
                 url: "http://127.0.0.1:3001/post",
@@ -160,4 +99,38 @@ console.log("The cookie includees: " + document.cookie);
             });
             setStateCookie(4);
         });
+        document.getElementById('startBtn').addEventListener('click', function() {
+            $test = setInterval(function () {
+                // break out of interval when all bottles are produced
+                if (document.getElementById('bottled-id').value === document.getElementById('amount-id').value) {
+                    clearInterval($test)
+                }
+                $.ajax({
+                    url: "api/collection",
+                type: "GET",
+                    success: function (data) {
+                    if (data['temp'] != null) {
+                        document.getElementById('temp-id').value = data['temp'].temperature;
+                    }
+                    if (data['batch'] != null) {
+                        document.getElementById('bottled-id').value = data['batch'].producedAmount;
+                        document.getElementById('defect-id').value = data['batch'].defectAmount;
+                        document.getElementById('accept-id').value = data['batch'].acceptedAmount;
+                    }
+                    if (data['humidity'] != null) {
+                        document.getElementById('humidity-id').value = data['humidity'].humidity;
+                    }
+                    if (data['vibration'] != null) {
+                        document.getElementById('vibration-id').value = data['vibration'].vibration;
+                    }
 
+                    document.getElementById('progress-bar-barley').style.height = (data['inventory'].barley / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-hops').style.height = (data['inventory'].hops / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-malt').style.height = (data['inventory'].malt / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-yeast').style.height = (data['inventory'].yeast / 35000) * 100 + "%";
+                    document.getElementById('progress-bar-wheat').style.height = (data['inventory'].wheat / 35000) * 100 + "%";
+                    document.getElementById('myBar').style.height = 100 - (data['inventory'].maintenance / 30000) * 100 + "%";
+                }
+            })
+            }, 500)
+        });
