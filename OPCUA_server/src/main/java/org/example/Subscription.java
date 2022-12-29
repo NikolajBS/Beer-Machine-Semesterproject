@@ -32,14 +32,14 @@ public class Subscription {
     public static void main(String[] args) {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/beers", "root", "secret");
-            List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://127.0.0.1:4840").get();
+            List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints("opc.tcp://192.168.0.122:4840").get();
 
             OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
 
             /*Selecting the endpoint connection with Security Mode/Security Policy == "None"*/
             for (int i = 0; i < endpoints.size(); i++) {
                 if (endpoints.get(i).getSecurityMode().name().equals("None")) {
-                    EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(i), "127.0.0.1", 4840);
+                    EndpointDescription configPoint = EndpointUtil.updateUrl(endpoints.get(i), "192.168.0.122", 4840);
                     cfg.setEndpoint(configPoint);
                     break;
                 }
@@ -57,17 +57,22 @@ public class Subscription {
                 NodeId nodeId = new NodeId(6, node);
                 ReadValueId readValueId = new ReadValueId(nodeId, AttributeId.Value.uid(), null, null);
 
-                UaSubscription subscription = client.getSubscriptionManager().createSubscription(1000.0).get();
+                UaSubscription subscription = client.getSubscriptionManager().createSubscription(50.0).get();
                 UInteger totalAmount = subscription.getSubscriptionId();
                 double interval;
                 UInteger num;
-                if(node.equals("::Program:Cube.Admin.ProdProcessedCount")){
+                if(node.equals("::Program:Cube.Admin.ProdProcessedCount") |node.equals("::Program:Cube.Admin.ProdDefectiveCount")){
                     interval=200.0;
-                    num = Unsigned.uint(5);
+                    num = Unsigned.uint(0);
+                }
+                else if (node.equals("::Program:Cube.Status.Parameter[2].Value")|node.equals("::Program:Cube.Status.Parameter[3].Value")|node.equals(
+                        "::Program:Cube.Status.Parameter[4].Value")){
+                    interval = 5000.0;
+                    num = Unsigned.uint(20);
                 }
                 else{
                     interval=10000.0;
-                    num = Unsigned.uint(10);
+                    num = Unsigned.uint(100);
                 }
                 MonitoredItemCreateRequest request = new MonitoredItemCreateRequest(readValueId,
                         MonitoringMode.Reporting, new MonitoringParameters(
@@ -86,6 +91,7 @@ public class Subscription {
                         System.out.println("item created for nodeId=" + item.getReadValueId().getNodeId());
                     } else {
                         System.out.println("failed to create item for nodeId=" + item.getReadValueId().getNodeId() + " (status=" + item.getStatusCode() + ")");
+
                     }
                 }
             }
@@ -104,17 +110,17 @@ public class Subscription {
     private static void createEntry(String name, Object val){
         String sql = null;
         switch (name){
+            case "::Program:Cube.Admin.ProdDefectiveCount":
+                sql = "UPDATE batches SET defectAmount = ?, acceptedAmount = (producedAmount-defectAmount) WHERE id = (SELECT MAX(id) from (select id from batches) as subquery)";
+                break;
             case "::Program:Cube.Admin.ProdProcessedCount":
                 sql = "UPDATE batches SET producedAmount = ?,acceptedAmount = (producedAmount-defectAmount) WHERE id = (SELECT MAX(id) from (select id from batches) as subquery)";
                 break;
-            case "::Program:Cube.Status.Parameter[3].Value":
-                sql = "INSERT INTO temperatures (temperature,batch_id) VALUES(?,(SELECT MAX(id) from (select id from batches) as subquery))";
-                break;
-            case "::Program:Cube.Admin.ProdDefectiveCount":
-                sql = "UPDATE batches SET defectAmount = ? WHERE id = (SELECT MAX(id) from (select id from batches) as subquery)";
-                break;
             case "::Program:Cube.Status.Parameter[2].Value":
                 sql = "INSERT INTO humidities (humidity,batch_id) VALUES(?,(SELECT MAX(id) from (select id from batches) as subquery))";
+                break;
+            case "::Program:Cube.Status.Parameter[3].Value":
+                sql = "INSERT INTO temperatures (temperature,batch_id) VALUES(?,(SELECT MAX(id) from (select id from batches) as subquery))";
                 break;
             case "::Program:Cube.Status.Parameter[4].Value":
                 sql = "INSERT INTO vibrations (vibration,batch_id) VALUES(?,(SELECT MAX(id) from (select id from batches) as subquery))";

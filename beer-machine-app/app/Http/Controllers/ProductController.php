@@ -53,7 +53,9 @@ class ProductController extends Controller
 
     function getLastBatch(){
         $batch = Batch::all()->last();
-        return view('home')->with('batch',$batch);
+        $temp = Temperature::all()->last();
+        $humid = Humidity::all()->last();
+        return view('home',['batch'=>$batch,'temp'=>$temp,'humidity'=>$humid]);
     }
 
     function getDashboard(){
@@ -66,11 +68,11 @@ class ProductController extends Controller
             $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
         }
 
-        if (Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
+        if (Humidity::all()->last() == null){
             $avgHumidity = "null";
         }
         else{
-            $avgHumidity = Humidity::all()->where('batch_id', $batchId->id)->avg('humidity');
+            $avgHumidity = Humidity::all()->last()->avg('humidity');
         }
 
         return view('dashboard')->with('batch', $batchId)->with('temp', $avgTemp)->with('humidity', $avgHumidity);

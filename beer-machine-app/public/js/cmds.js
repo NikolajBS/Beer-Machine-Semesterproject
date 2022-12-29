@@ -103,6 +103,7 @@ $('#abortBtn').click(function() {
 
 document.getElementById('startBtn').addEventListener('click', function() {
             $test = setInterval(function () {
+                console.log("hi")
                 // break out of interval when all bottles are produced
                 if (document.getElementById('bottled-id').value === document.getElementById('amount-id').value) {
                     clearInterval($test)

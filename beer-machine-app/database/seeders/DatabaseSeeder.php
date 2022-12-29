@@ -17,8 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InventorySeeder::class
         ]);
-        // \App\Models\User::factory(10)->create();
-            InventorySeeder::class,
-        ]);
     }
 }

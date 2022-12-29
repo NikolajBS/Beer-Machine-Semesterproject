@@ -36,7 +36,7 @@
         <div>
             <h2>{{$batch->id}}</h2>
             <h2>{{$batch->type}}</h2>
-            <h2>{{$batch->producedAmount}}</h2>
+            <h2 id="produced">{{$batch->producedAmount}}</h2>
             <h2 id="defect">{{$batch->defectAmount}}</h2>
             <h2 id="acceptable">{{$batch->producedAmount - $batch->defectAmount}}</h2>
             <h2 id="state1">0</h2>

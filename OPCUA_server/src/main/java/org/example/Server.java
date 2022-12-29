@@ -34,6 +34,7 @@ public static void server() throws IOException {
 
                 if (arr.length> 2) {
                     command.beerParameters(arr[0],  arr[1], arr[2], arr[3]);
+                    // start subscription
                 } else {
                     command.sendCommand((int) arr[0]);
                 }

@@ -80,7 +80,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/thermometer.svg')}}">
-                        <input readonly id="temp-id" value="0">
+                        <input readonly id="temp-id" value="{{$temp->temperature}}">
                     </div>
                     <div class="data-item">
                         <p>Temperature</p>
@@ -98,7 +98,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/beer.svg')}}">
-                        <input readonly  id="bottled-id" value="0">
+                        <input readonly  id="bottled-id">
                     </div>
                     <div class="data-item">
                         <p>Produced</p>
@@ -109,7 +109,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/humidity.png')}}">
-                        <input readonly  id="humidity-id" value="0">
+                        <input readonly  id="humidity-id" value="{{$humidity->humidity}}">
                     </div>
                     <div class="data-item">
                         <p>Humidity</p>
@@ -127,7 +127,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/accept.svg')}}">
-                        <input readonly  id="accept-id" value="0">
+                        <input readonly  id="accept-id">
                     </div>
                     <div class="data-item">
                         <p>Acceptable products</p>
@@ -138,7 +138,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/vibration.svg')}}">
-                        <input readonly id="vibration-id" value="0">
+                        <input readonly id="vibration-id">
                     </div>
                     <div class="data-item">
                         <p>Vibration</p>
@@ -156,7 +156,7 @@
                 <div class="test">
                     <div class="data-item">
                         <img src="{{asset('images/defect.svg')}}">
-                        <input readonly  id="defect-id" value="0">
+                        <input readonly  id="defect-id">
 
                     </div>
                     <div class="data-item">

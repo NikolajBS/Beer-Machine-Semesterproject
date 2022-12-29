@@ -22,6 +22,13 @@ let pieChart = new Chart(pie, {
     }
 });
 
+function updateBatch(){
+    defect = document.getElementById("defect").innerText;
+    acceptable = document.getElementById("acceptable").innerText;
+    document.getElementById("produced").innerText = document.getElementById("bottled-id").innerText;
+    pieData[0] = defect;
+    pieData[1] = acceptable
+}
 let state1 = document.getElementById("state1").innerHTML;
 let state2 = document.getElementById("state2").innerHTML;
 let state3 = document.getElementById("state3").innerHTML;
@@ -30,6 +37,7 @@ let state5 = document.getElementById("state5").innerHTML;
 let barLabel = ["State 1","State 2", "State 3", "State 4", "State 5"]
 let bgColorBar = ["red", "green","blue","yellow","cyan"]
 let data = [state1, state2, state3, state4, state5]
+
 let bar = document.getElementById("bar").getContext("2d");
 
 let barChart = new Chart(bar, {
@@ -96,7 +104,9 @@ function timer(){
 }
 
 setInterval(function (){
+    //updateBatch();
     timer();
     barChart.update();
+    pieChart.update();
 }, 1000);
 

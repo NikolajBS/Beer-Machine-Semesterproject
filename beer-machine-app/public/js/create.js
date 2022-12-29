@@ -18,7 +18,7 @@ select.onchange = function (){
     }if(select.value==="4"){
         input_amount.setAttribute("max",100);
         input_amount.setAttribute("min",1);
-    }if(select.value==="6"){
+    }if(select.value==="5"){
         input_amount.setAttribute("max",125);
         input_amount.setAttribute("min",1);
     }
