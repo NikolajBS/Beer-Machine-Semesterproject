@@ -9,7 +9,6 @@ use App\Models\Inventory;
 use App\Models\Temperature;
 use App\Models\Vibration;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 class ProductController extends Controller
 {
@@ -17,6 +16,7 @@ class ProductController extends Controller
     public function create(){
         return view('create');
     }
+
     public function store(Request $request){
         //validation
         $request->validate(['type'=>'required|between:0,5',
@@ -36,6 +36,7 @@ class ProductController extends Controller
 
         return redirect()->route('home');
     }
+
     function getEverything(){
         $batch = Batch::all()->last();
         $inventory = Inventory::first();
@@ -49,21 +50,29 @@ class ProductController extends Controller
         return response()->json(['batch'=>$batch,'temp'=>$temp,'humidity'=>$humidity,
             'vibration'=>$vibration,'inventory'=>$data]);
     }
+
+    function getLastBatch(){
+        $batch = Batch::all()->last();
+        $temp = Temperature::all()->last();
+        $humid = Humidity::all()->last();
+        return view('home',['batch'=>$batch,'temp'=>$temp,'humidity'=>$humid]);
+    }
+
     function getDashboard(){
         $batchId = Batch::all()->last();
 
-        if(Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
+        if (Temperature::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){ //Temperature and humidity is null when the simulation is used
             $avgTemp = "null";
         }
         else{
             $avgTemp = Temperature::all()->where('batch_id', $batchId->id)->avg('temperature');
         }
 
-        if(Humidity::where('batch_id', $batchId->id)->orderBy('id','DESC')->first() == null){
+        if (Humidity::all()->last() == null){
             $avgHumidity = "null";
         }
         else{
-            $avgHumidity = Humidity::all()->where('batch_id', $batchId->id)->avg('humidity');
+            $avgHumidity = Humidity::all()->last()->avg('humidity');
         }
 
         return view('dashboard')->with('batch', $batchId)->with('temp', $avgTemp)->with('humidity', $avgHumidity);

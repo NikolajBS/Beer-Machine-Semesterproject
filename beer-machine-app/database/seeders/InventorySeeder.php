@@ -17,8 +17,12 @@ class InventorySeeder extends Seeder
     public function run()
     {
         DB::table('inventories')->insert([
-            'name' => 'lol',
-            'amount' => 100
+            'barley'=>0,
+            'hops'=>0,
+            'malt'=>0,
+            'wheat'=>0,
+            'yeast'=>0,
+            'maintenance'=>0
         ]);
     }
 }
