@@ -10,14 +10,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class Server {
-
+private static HttpServer server;
+private static HttpHandler handler;
 
 public static void server() throws IOException {
 
-    HttpServer server = HttpServer.create(new InetSocketAddress(3001), 0);
+    server = HttpServer.create(new InetSocketAddress(3001), 0);
     Command command = Command.getInstance();
     // Create a new HttpHandler to handle POST requests
-    HttpHandler handler = new HttpHandler() {
+    handler = new HttpHandler() {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             // Get the request method (should be POST)
